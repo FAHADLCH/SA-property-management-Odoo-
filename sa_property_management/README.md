@@ -17,7 +17,7 @@ End-to-end real estate management module tailored for the Pakistani market.
 ## Compatibility
 
 - Odoo **18.0** and **19.0** (Community & Enterprise)
-- License: **LGPL-3**
+- License: **OPL-1** (Odoo Proprietary License v1.0)
 - Dependencies: `base`, `mail`, `account`, `product`, `portal`, `crm`
 
 > The module uses modern Odoo view syntax (`<list>`, `<chatter/>`,
@@ -71,7 +71,7 @@ End-to-end real estate management module tailored for the Pakistani market.
 
 This module follows the official Odoo Apps guidelines:
 - Valid manifest with all required keys (`name`, `version`, `license`, `category`, `summary`).
-- LGPL-3 license file included.
+- OPL-1 (Odoo Proprietary License) license file included.
 - `static/description/index.html` description page with screenshots placeholder.
 - No external Python deps; only uses Odoo core modules.
 - Semantic version starts with the target Odoo major (`18.0.1.0.0`).

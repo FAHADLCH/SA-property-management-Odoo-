@@ -42,7 +42,7 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'maintainer': "SA Property Management",
     'website': "https://sasystems.solutions/custom-web-app-development",
     'support': "info@sasystems.solutions",
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Services/Real Estate',
     # Series-prefixed version (this is the Odoo 19.0 branch).
     'version': '19.0.1.0.0',
