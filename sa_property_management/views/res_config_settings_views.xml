@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_config_settings_inherit_sa_property" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit.sa.property</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Property Management" string="Property Management"
+                     name="sa_property_management" groups="sa_property_management.group_sa_property_manager">
+                    <block title="Defaults" name="sa_defaults">
+                        <setting id="sa_default_area_uom" string="Default Area Unit"
+                                 help="Default unit displayed on new properties.">
+                            <field name="sa_default_area_uom"/>
+                        </setting>
+                        <setting id="sa_default_dealer_commission"
+                                 string="Default Dealer Commission (%)">
+                            <field name="sa_default_dealer_commission"/>
+                        </setting>
+                        <setting id="sa_currency_id" string="Property Currency">
+                            <field name="sa_currency_id"/>
+                        </setting>
+                    </block>
+                    <block title="Accounting" name="sa_accounting">
+                        <setting id="sa_property_journal_id"
+                                 string="Property Sales Journal">
+                            <field name="sa_property_journal_id"/>
+                        </setting>
+                        <setting id="sa_transfer_journal_id"
+                                 string="Property Transfer Journal">
+                            <field name="sa_transfer_journal_id"/>
+                        </setting>
+                        <setting id="sa_default_property_income_account_id"
+                                 string="Default Income Account">
+                            <field name="sa_default_property_income_account_id"/>
+                        </setting>
+                        <setting id="sa_default_payment_term_id"
+                                 string="Default Payment Terms"
+                                 help="Native Odoo payment terms used on bookings, service bills and their invoices.">
+                            <field name="sa_default_payment_term_id"/>
+                        </setting>
+                    </block>
+                    <block title="Automation" name="sa_automation">
+                        <setting id="sa_send_payment_reminders"
+                                 string="Send Installment Reminders"
+                                 help="Email reminders for upcoming &amp; overdue installments.">
+                            <field name="sa_send_payment_reminders"/>
+                        </setting>
+                    </block>
+                    <block title="Document Branding" name="sa_branding">
+                        <setting id="sa_doc_tagline" string="Document Tagline"
+                                 help="Printed under the company name on PDF documents.">
+                            <field name="sa_doc_tagline"/>
+                        </setting>
+                        <setting id="sa_doc_footer" string="Document Footer Note"
+                                 help="Branded footer line on receipts, bookings and allocations.">
+                            <field name="sa_doc_footer"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_sa_property_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'sa_property_management'}</field>
+    </record>
+
+</odoo>

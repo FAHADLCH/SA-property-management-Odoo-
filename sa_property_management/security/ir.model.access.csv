@@ -1,0 +1,46 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sa_transfer_tax_user,sa.transfer.tax user,model_sa_transfer_tax,group_sa_property_user,1,0,0,0
+access_sa_transfer_tax_manager,sa.transfer.tax manager,model_sa_transfer_tax,group_sa_property_manager,1,1,1,1
+access_sa_misc_charge_user,sa.misc.charge user,model_sa_misc_charge,group_sa_property_user,1,0,0,0
+access_sa_misc_charge_manager,sa.misc.charge manager,model_sa_misc_charge,group_sa_property_manager,1,1,1,1
+access_sa_payment_plan_user,sa.payment.plan user,model_sa_payment_plan,group_sa_property_user,1,0,0,0
+access_sa_payment_plan_manager,sa.payment.plan manager,model_sa_payment_plan,group_sa_property_manager,1,1,1,1
+access_sa_payment_plan_line_user,sa.payment.plan.line user,model_sa_payment_plan_line,group_sa_property_user,1,0,0,0
+access_sa_payment_plan_line_manager,sa.payment.plan.line manager,model_sa_payment_plan_line,group_sa_property_manager,1,1,1,1
+access_sa_property_project_user,sa.property.project user,model_sa_property_project,group_sa_property_user,1,1,0,0
+access_sa_property_project_manager,sa.property.project manager,model_sa_property_project,group_sa_property_manager,1,1,1,1
+access_sa_property_user,sa.property user,model_sa_property,group_sa_property_user,1,1,1,0
+access_sa_property_manager,sa.property manager,model_sa_property,group_sa_property_manager,1,1,1,1
+access_sa_property_feature_user,sa.property.feature user,model_sa_property_feature,group_sa_property_user,1,0,0,0
+access_sa_property_feature_manager,sa.property.feature manager,model_sa_property_feature,group_sa_property_manager,1,1,1,1
+access_sa_property_dealer_user,sa.property.dealer user,model_sa_property_dealer,group_sa_property_user,1,0,0,0
+access_sa_property_dealer_manager,sa.property.dealer manager,model_sa_property_dealer,group_sa_property_manager,1,1,1,1
+access_sa_property_booking_user,sa.property.booking user,model_sa_property_booking,group_sa_property_user,1,1,1,0
+access_sa_property_booking_manager,sa.property.booking manager,model_sa_property_booking,group_sa_property_manager,1,1,1,1
+access_sa_property_installment_user,sa.property.installment user,model_sa_property_installment,group_sa_property_user,1,1,0,0
+access_sa_property_installment_manager,sa.property.installment manager,model_sa_property_installment,group_sa_property_manager,1,1,1,1
+access_sa_property_transfer_user,sa.property.transfer user,model_sa_property_transfer,group_sa_property_user,1,1,1,0
+access_sa_property_transfer_manager,sa.property.transfer manager,model_sa_property_transfer,group_sa_property_manager,1,1,1,1
+access_sa_transfer_tax_line_user,sa.transfer.tax.line user,model_sa_transfer_tax_line,group_sa_property_user,1,1,1,1
+access_sa_transfer_tax_line_manager,sa.transfer.tax.line manager,model_sa_transfer_tax_line,group_sa_property_manager,1,1,1,1
+access_sa_transfer_misc_line_user,sa.transfer.misc.line user,model_sa_transfer_misc_line,group_sa_property_user,1,1,1,1
+access_sa_transfer_misc_line_manager,sa.transfer.misc.line manager,model_sa_transfer_misc_line,group_sa_property_manager,1,1,1,1
+access_sa_booking_confirm_wizard,sa.booking.confirm.wizard,model_sa_booking_confirm_wizard,group_sa_property_user,1,1,1,1
+access_sa_booking_confirm_wizard_line,sa.booking.confirm.wizard.line,model_sa_booking_confirm_wizard_line,group_sa_property_user,1,1,1,1
+access_sa_installment_payment_wizard,sa.installment.payment.wizard,model_sa_installment_payment_wizard,group_sa_property_user,1,1,1,1
+access_sa_property_transfer_wizard,sa.property.transfer.wizard,model_sa_property_transfer_wizard,group_sa_property_user,1,1,1,1
+access_sa_dashboard_config_user,sa.property.dashboard.config user,model_sa_property_dashboard_config,group_sa_property_user,1,1,1,1
+access_sa_dashboard_config_manager,sa.property.dashboard.config manager,model_sa_property_dashboard_config,group_sa_property_manager,1,1,1,1
+access_sa_property_image_user,sa.property.image user,model_sa_property_image,group_sa_property_user,1,1,1,1
+access_sa_property_image_manager,sa.property.image manager,model_sa_property_image,group_sa_property_manager,1,1,1,1
+access_sa_marketing_collateral_user,sa.marketing.collateral user,model_sa_marketing_collateral,group_sa_property_user,1,1,1,1
+access_sa_marketing_collateral_manager,sa.marketing.collateral manager,model_sa_marketing_collateral,group_sa_property_manager,1,1,1,1
+access_sa_property_service_user,sa.property.service user,model_sa_property_service,group_sa_property_user,1,0,0,0
+access_sa_property_service_manager,sa.property.service manager,model_sa_property_service,group_sa_property_manager,1,1,1,1
+access_sa_service_assignment_user,sa.property.service.assignment user,model_sa_property_service_assignment,group_sa_property_user,1,1,1,0
+access_sa_service_assignment_manager,sa.property.service.assignment manager,model_sa_property_service_assignment,group_sa_property_manager,1,1,1,1
+access_sa_dealer_allocation_user,sa.dealer.allocation user,model_sa_dealer_allocation,group_sa_property_user,1,1,1,0
+access_sa_dealer_allocation_manager,sa.dealer.allocation manager,model_sa_dealer_allocation,group_sa_property_manager,1,1,1,1
+access_sa_lead_source_user,sa.lead.source user,model_sa_lead_source,group_sa_property_user,1,1,1,0
+access_sa_lead_source_manager,sa.lead.source manager,model_sa_lead_source,group_sa_property_manager,1,1,1,1
+access_sa_lead_import_wizard,sa.lead.import.wizard,model_sa_lead_import_wizard,group_sa_property_user,1,1,1,1
