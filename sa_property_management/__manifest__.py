@@ -30,8 +30,13 @@ Key Features
 
 Built On
 --------
-Leverages Odoo core: ``account``, ``product``, ``mail`` and ``portal`` for
-invoicing, communications and customer self-service.
+Leverages Odoo core: ``account``, ``product``, ``mail``, ``portal`` and
+``crm`` for invoicing, communications, customer self-service and lead-source
+integration.
+
+Compatibility
+-------------
+Verified on **Odoo 18.0 and 19.0** (Community).
     """,
     'author': "SA Property Management",
     'maintainer': "SA Property Management",
