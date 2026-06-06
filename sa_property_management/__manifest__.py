@@ -42,7 +42,7 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'maintainer': "SA Property Management",
     'website': "https://sasystems.solutions/custom-web-app-development",
     'support': "info@sasystems.solutions",
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Services/Real Estate',
     # Series-agnostic version so the module installs on Odoo 18 and 19 alike
     # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
