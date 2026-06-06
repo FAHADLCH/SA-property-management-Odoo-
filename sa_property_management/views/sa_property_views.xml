@@ -235,7 +235,7 @@
                 <filter string="House" name="type_house" domain="[('property_type', '=', 'house')]"/>
                 <filter string="Apartment" name="type_apt" domain="[('property_type', '=', 'apartment')]"/>
                 <filter string="Commercial" name="type_com" domain="[('property_type', 'in', ('shop', 'commercial', 'office'))]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Project" name="grp_project" context="{'group_by': 'project_id'}"/>
                     <filter string="Type" name="grp_type" context="{'group_by': 'property_type'}"/>
                     <filter string="State" name="grp_state" context="{'group_by': 'state'}"/>

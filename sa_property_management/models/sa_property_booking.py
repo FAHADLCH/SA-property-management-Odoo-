@@ -257,7 +257,6 @@ class SaPropertyBooking(models.Model):
         return self.env['account.account'].search([
             ('account_type', '=', 'income'),
             ('company_ids', 'in', self.company_id.id),
-            ('deprecated', '=', False),
         ], limit=1)
 
     def _get_sale_journal(self):

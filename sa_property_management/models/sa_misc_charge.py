@@ -36,7 +36,7 @@ class SaMiscCharge(models.Model):
 
     account_id = fields.Many2one(
         'account.account',
-        domain="[('deprecated', '=', False), ('company_ids', 'in', company_id)]",
+        domain="[('company_ids', 'in', company_id)]",
         help="Account credited when this charge is posted.")
 
     apply_on = fields.Selection(

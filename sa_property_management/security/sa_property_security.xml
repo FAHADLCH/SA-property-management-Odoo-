@@ -13,7 +13,6 @@
         <!-- Groups -->
         <record id="group_sa_property_user" model="res.groups">
             <field name="name">User</field>
-            <field name="category_id" ref="module_category_sa_property"/>
             <field name="implied_ids"
                    eval="[(4, ref('base.group_user')),
                           (4, ref('sales_team.group_sale_salesman'))]"/>
@@ -23,11 +22,9 @@
 
         <record id="group_sa_property_manager" model="res.groups">
             <field name="name">Manager</field>
-            <field name="category_id" ref="module_category_sa_property"/>
             <field name="implied_ids"
                    eval="[(4, ref('group_sa_property_user')),
                           (4, ref('account.group_account_invoice'))]"/>
-            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
             <field name="comment">Full access to property management: configuration,
                 approvals, transfers, financial integration.</field>
         </record>

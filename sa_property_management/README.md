@@ -1,4 +1,4 @@
-# SA Property Management — Pakistan Real Estate (Odoo 18)
+# SA Property Management — Pakistan Real Estate (Odoo 18 / 19)
 
 End-to-end real estate management module tailored for the Pakistani market.
 
@@ -16,9 +16,14 @@ End-to-end real estate management module tailored for the Pakistani market.
 
 ## Compatibility
 
-- Odoo **18.0** (Community & Enterprise)
+- Odoo **18.0** and **19.0** (Community & Enterprise)
 - License: **LGPL-3**
-- Dependencies: `base`, `mail`, `account`, `product`, `portal`
+- Dependencies: `base`, `mail`, `account`, `product`, `portal`, `crm`
+
+> The module uses modern Odoo view syntax (`<list>`, `<chatter/>`,
+> `<app>/<block>/<setting>` settings, `@api.model_create_multi`), which
+> requires **Odoo 18.0 as the minimum** supported series. It is verified to
+> install and pass its test suite on both Odoo 18 and Odoo 19.
 
 ## Installation (Local Testing)
 

@@ -139,7 +139,7 @@
                 <filter string="In Payment" name="in_pay" domain="[('state', '=', 'in_payment')]"/>
                 <filter string="Completed" name="done" domain="[('state', '=', 'completed')]"/>
                 <filter string="Cancelled" name="cnl" domain="[('state', '=', 'cancelled')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Project" name="grp_project" context="{'group_by': 'project_id'}"/>
                     <filter string="Dealer" name="grp_dealer" context="{'group_by': 'dealer_id'}"/>
                     <filter string="Salesperson" name="grp_sp" context="{'group_by': 'salesperson_id'}"/>

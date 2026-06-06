@@ -39,10 +39,13 @@ invoicing, communications and customer self-service.
     'support': "support@example.com",
     'license': 'LGPL-3',
     'category': 'Services/Real Estate',
-    'version': '18.0.1.0.0',
+    # Series-agnostic version so the module installs on Odoo 18 and 19 alike
+    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
+    'version': '1.0.0',
     'application': True,
     'installable': True,
     'auto_install': False,
+    'post_init_hook': 'post_init_hook',
 
     'depends': [
         'base',

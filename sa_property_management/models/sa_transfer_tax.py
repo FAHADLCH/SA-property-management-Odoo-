@@ -44,7 +44,7 @@ class SaTransferTax(models.Model):
 
     account_id = fields.Many2one(
         'account.account',
-        domain="[('deprecated', '=', False), ('company_ids', 'in', company_id)]",
+        domain="[('company_ids', 'in', company_id)]",
         help="Account credited when this tax is posted with the transfer entry.")
 
     property_type_filter = fields.Selection(

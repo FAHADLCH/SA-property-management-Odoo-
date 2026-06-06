@@ -152,7 +152,7 @@
                 <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
                 <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
                 <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Property" name="grp_property" context="{'group_by': 'property_id'}"/>
                     <filter string="Project" name="grp_project" context="{'group_by': 'project_id'}"/>
                     <filter string="Seller" name="grp_seller" context="{'group_by': 'from_partner_id'}"/>

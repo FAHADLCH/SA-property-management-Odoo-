@@ -26,7 +26,6 @@ class ResConfigSettings(models.TransientModel):
 
     sa_default_property_income_account_id = fields.Many2one(
         'account.account', string='Default Property Income Account',
-        domain="[('deprecated', '=', False)]",
         config_parameter='sa_property_management.default_income_account_id')
 
     sa_default_dealer_commission = fields.Float(

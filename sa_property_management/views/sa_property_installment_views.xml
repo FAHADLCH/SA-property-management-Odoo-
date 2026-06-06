@@ -95,7 +95,7 @@
                         domain="[('due_date', '&gt;=', (context_today()).strftime('%Y-%m-01'))]"/>
                 <filter string="Due Today" name="due_today"
                         domain="[('due_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Customer" name="grp_customer" context="{'group_by': 'customer_id'}"/>
                     <filter string="Booking" name="grp_booking" context="{'group_by': 'booking_id'}"/>
                     <filter string="Property" name="grp_property" context="{'group_by': 'property_id'}"/>
