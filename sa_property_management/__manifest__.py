@@ -44,6 +44,9 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'support': "info@sasystems.solutions",
     'license': 'OPL-1',
     'category': 'Services/Real Estate',
+    # Paid app: price + currency are read by the Odoo Apps store scanner.
+    'price': 50.00,
+    'currency': 'USD',
     # Series-prefixed version (this is the Odoo 19.0 branch).
     'version': '19.0.1.0.0',
     'application': True,
