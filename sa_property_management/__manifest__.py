@@ -44,6 +44,9 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'support': "info@sasystems.solutions",
     'license': 'OPL-1',
     'category': 'Services/Real Estate',
+    # Paid app: price + currency are read by the Odoo Apps store scanner.
+    'price': 50.00,
+    'currency': 'USD',
     # Series-agnostic version so the module installs on Odoo 18 and 19 alike
     # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
     'version': '1.0.0',
