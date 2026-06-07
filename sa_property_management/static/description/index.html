@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SA Property Management - Pakistan Real Estate ERP</title>
+    <title>SA Property Management</title>
 </head>
 <body>
 <!--
     The Odoo Apps Store sanitizes description HTML (it strips <style> blocks,
-    external CSS and web fonts). To guarantee the branded design renders
-    identically on the live store, each section is shipped as an optimized
-    image. Odoo's own stylesheet applies img{max-width:100%}, so the images
-    stay fully responsive even after sanitization.
+    external CSS and web fonts) and only honors Bootstrap 4 classes plus a
+    small whitelist of inline style attributes. To guarantee the branded design
+    renders on the live store, each section ships as an optimized image in this
+    same /static/description folder and is embedded with Bootstrap's responsive
+    .img-fluid class. No JavaScript, external CSS or non-whitelisted links.
 -->
-<div class="oe_screenshots" style="max-width:1160px;margin:0 auto;text-align:center;">
-    <img src="sec_hero.png" style="width:100%;display:block;margin:0 auto;" alt="SA Property Management — Real Estate ERP for Pakistan. Housing societies, plots, apartments, payment plans, dealerships and property transfers with CVT, Stamp Duty and FBR logic built in. 6 core modules, 5+ PK tax types, Odoo 18/19, 100% configurable."/>
-    <img src="sec_features.png" style="width:100%;display:block;margin:0 auto;" alt="Core features: property and inventory management, customer CRM, flexible payment plans, Pakistan tax compliance (CVT, Stamp Duty, FBR), dealership management and property transfer workflows."/>
-    <img src="sec_architecture.png" style="width:100%;display:block;margin:0 auto;" alt="Built on Odoo's proven architecture — integrates with account, crm, mail, portal and product modules."/>
-    <img src="sec_reports.png" style="width:100%;display:block;margin:0 auto;" alt="Built-in reporting: payment plan statements, tax summaries and property ledgers."/>
-    <img src="sec_footer.png" style="width:100%;display:block;margin:0 auto;" alt="Developed by SA Systems. Licensed under OPL-1."/>
-</div>
+<section class="oe_screenshots container text-center">
+    <img class="img-fluid d-block mx-auto" src="sec_hero.png" alt="SA Property Management — Real Estate ERP for Pakistan. Housing societies, plots, apartments, payment plans, dealerships and property transfers with CVT, Stamp Duty and FBR logic built in. 6 core modules, 5+ PK tax types, Odoo 18/19, 100% configurable."/>
+    <img class="img-fluid d-block mx-auto" src="sec_features.png" alt="Core features: property and inventory management, customer CRM, flexible payment plans, Pakistan tax compliance (CVT, Stamp Duty, FBR), dealership management and property transfer workflows."/>
+    <img class="img-fluid d-block mx-auto" src="sec_architecture.png" alt="Built on Odoo's proven architecture — integrates with account, crm, mail, portal and product modules."/>
+    <img class="img-fluid d-block mx-auto" src="sec_reports.png" alt="Built-in reporting: payment plan statements, tax summaries and property ledgers."/>
+    <img class="img-fluid d-block mx-auto" src="sec_footer.png" alt="Developed by SA Systems. Licensed under OPL-1."/>
+</section>
 
-<!-- Plain-text fallback: survives sanitization and keeps contact links clickable -->
-<section style="max-width:1160px;margin:24px auto 0;padding:0 24px;text-align:center;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#52525b;">
-    <p style="margin:0 0 6px;font-size:15px;">
-        <strong style="color:#0f0f0f;">SA Property Management</strong> — Real Estate ERP for Pakistan, built by
-        <a href="https://sasystems.solutions/custom-web-app-development" style="color:#ff3c3c;text-decoration:none;">SA Systems</a>.
+<!-- Plain-text block: survives sanitization and keeps the support link clickable -->
+<section class="container text-center mt-4">
+    <p style="margin-bottom:6px;font-size:15px;color:#52525b;">
+        <strong style="color:#0f0f0f;">SA Property Management</strong> — Real Estate ERP for Pakistan.
     </p>
-    <p style="margin:0;font-size:14px;">
-        Questions or a custom build? Email
-        <a href="mailto:info@sasystems.solutions" style="color:#ff3c3c;text-decoration:none;">info@sasystems.solutions</a>
+    <p style="margin-bottom:0;font-size:14px;color:#52525b;">
+        Support and questions: <a href="mailto:info@sasystems.solutions" style="color:#ff3c3c;">info@sasystems.solutions</a>
         &nbsp;·&nbsp; Licensed under OPL-1.
     </p>
 </section>

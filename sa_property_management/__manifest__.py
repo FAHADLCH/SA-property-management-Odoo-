@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "SA Property Management - Pakistan Real Estate",
+    'name': "SA Property Management",
     'summary': "End-to-end real estate property management for the Pakistani market: "
                "listings, payment plans, receivables, dealerships and property transfers "
                "with CVT, Stamp Duty, FBR tax and misc-charge configuration.",
