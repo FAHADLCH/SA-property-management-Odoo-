@@ -10,6 +10,10 @@
                 <app data-string="Property Management" string="Property Management"
                      name="sa_property_management" groups="sa_property_management.group_sa_property_manager">
                     <block title="Defaults" name="sa_defaults">
+                        <setting id="sa_operating_country_id" string="Operating Country"
+                                 help="Transfer taxes and charges for this country (and global ones) apply automatically.">
+                            <field name="sa_operating_country_id"/>
+                        </setting>
                         <setting id="sa_default_area_uom" string="Default Area Unit"
                                  help="Default unit displayed on new properties.">
                             <field name="sa_default_area_uom"/>

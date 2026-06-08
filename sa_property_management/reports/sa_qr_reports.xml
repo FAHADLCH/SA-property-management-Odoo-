@@ -91,8 +91,8 @@
                             <div class="col-6">
                                 <strong>Identity</strong>
                                 <table class="table table-sm">
-                                    <tr><th>CNIC</th><td><span t-field="o.sa_cnic"/></td></tr>
-                                    <tr><th>NTN</th><td><span t-field="o.sa_ntn"/></td></tr>
+                                    <tr><th>National ID</th><td><span t-field="o.sa_cnic"/></td></tr>
+                                    <tr><th>Tax ID</th><td><span t-field="o.sa_ntn"/></td></tr>
                                     <tr><th>Father / Husband</th><td><span t-field="o.sa_father_husband_name"/></td></tr>
                                     <tr><th>Date of Birth</th><td><span t-field="o.sa_dob"/></td></tr>
                                     <tr><th>Passport</th><td><span t-field="o.sa_passport_no"/></td></tr>
@@ -114,7 +114,7 @@
                         <table class="table table-sm">
                             <tr><th>Name</th><td><span t-field="o.sa_nok_name"/></td></tr>
                             <tr><th>Relationship</th><td><span t-field="o.sa_nok_relation"/></td></tr>
-                            <tr><th>CNIC</th><td><span t-field="o.sa_nok_cnic"/></td></tr>
+                            <tr><th>National ID</th><td><span t-field="o.sa_nok_cnic"/></td></tr>
                             <tr><th>Mobile</th><td><span t-field="o.sa_nok_mobile"/></td></tr>
                             <tr><th>Address</th><td><span t-field="o.sa_nok_address"/></td></tr>
                         </table>

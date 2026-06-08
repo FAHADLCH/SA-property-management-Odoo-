@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 {
     'name': "SA Property Management",
-    'summary': "End-to-end real estate property management for the Pakistani market: "
+    'summary': "End-to-end real estate property management for any country: "
                "listings, payment plans, receivables, dealerships and property transfers "
-               "with CVT, Stamp Duty, FBR tax and misc-charge configuration.",
+               "with a country-aware tax engine and configurable miscellaneous charges.",
     'description': """
 SA Property Management
 ======================
 
-A complete property/real-estate management solution tailored for the
-**Pakistani real estate market**.
+A complete, **country-agnostic** property / real-estate management solution.
+Works out of the box for any market — pick your operating country in the
+settings and the matching transfer taxes and charges are applied automatically.
 
 Key Features
 ------------
-* **Property Listing** with Pakistani Units of Measure (Marla, Kanal, Sq.Ft, Sq.Yard).
+* **Property Listing** with flexible Units of Measure (Sq.Ft, Sq.Meter,
+  Sq.Yard, plus regional units such as Marla and Kanal).
 * **Project / Housing Society** management with blocks, streets and plot numbers.
 * **Payment Plan Builder** (Down Payment + Monthly/Quarterly/Half-Yearly/Yearly
   installments + Balloon Payments + On-Possession charge).
@@ -22,31 +24,32 @@ Key Features
 * **Receivables Management** with installment aging, overdue tracking and
   registered payment integration.
 * **Property Dealership Management** with commission calculation per booking.
-* **Property Transfer System** with configurable Taxes (CVT, Stamp Duty,
-  Registration Fee, Capital Gains, FBR) and Miscellaneous Charges
-  (file transfer, society dues, utility transfer).
-* **Backend Configuration** for all default tax accounts, journals, currency
-  (PKR) and area unit-of-measure - everything is data-driven, no hard-coding.
+* **Country-Aware Tax Engine** — define transfer taxes (transfer/stamp duty,
+  registration, capital gains, VAT/GST, withholding, etc.) and miscellaneous
+  charges per country, then select the relevant country in Configuration.
+  Ready-made presets ship for several markets and you can add your own.
+* **Backend Configuration** for default tax accounts, journals, currency,
+  operating country and area unit-of-measure - everything is data-driven,
+  with no hard-coded country logic.
 
 Built On
 --------
 Leverages Odoo core: ``account``, ``product``, ``mail``, ``portal`` and
 ``crm`` for invoicing, communications, customer self-service and lead-source
-integration.
+integration. No external dependencies — runs on Odoo Online, Odoo.sh and
+On-Premise.
 
 Compatibility
 -------------
 Verified on **Odoo 18.0 and 19.0** (Community).
     """,
-    'author': "SA Property Management",
-    'maintainer': "SA Property Management",
+    'author': "SA Systems",
+    'maintainer': "SA Systems",
     'website': "https://sasystems.solutions/custom-web-app-development",
     'support': "info@sasystems.solutions",
-    'license': 'OPL-1',
+    'license': 'LGPL-3',
     'category': 'Services/Real Estate',
-    # Paid app: price + currency are read by the Odoo Apps store scanner.
-    'price': 50.00,
-    'currency': 'USD',
+    # Free app: no price/currency keys so the Odoo Apps store lists it as free.
     # Series-prefixed version (this is the Odoo 19.0 branch).
     'version': '19.0.1.0.0',
     'application': True,
