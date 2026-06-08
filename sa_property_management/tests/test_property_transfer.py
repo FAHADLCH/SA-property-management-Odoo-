@@ -11,6 +11,9 @@ class TestPropertyTransfer(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # CVT and other preset taxes are tagged for Pakistan; point the company's
+        # operating country there so the country-aware engine applies them.
+        cls.env.company.sa_operating_country_id = cls.env.ref('base.pk')
         cls.seller = cls.env['res.partner'].create({'name': 'Seller', 'sa_cnic': '22222-2222222-2'})
         cls.buyer = cls.env['res.partner'].create({'name': 'Buyer', 'sa_cnic': '33333-3333333-3'})
         cls.project = cls.env['sa.property.project'].create({

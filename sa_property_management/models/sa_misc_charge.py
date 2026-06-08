@@ -16,6 +16,11 @@ class SaMiscCharge(models.Model):
     active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         'res.company', default=lambda self: self.env.company, required=True)
+    country_id = fields.Many2one(
+        'res.country', string='Country',
+        help="Country this charge applies to. Leave empty to apply it to every "
+             "country. The transfer engine pulls charges for the operating "
+             "country set in Property Management settings.")
 
     amount_type = fields.Selection(
         [('fixed', 'Fixed Amount'),
@@ -46,8 +51,8 @@ class SaMiscCharge(models.Model):
         default='transfer', required=True)
 
     _sql_constraints = [
-        ('code_company_uniq', 'unique(code, company_id)',
-         'Charge code must be unique per company.'),
+        ('code_company_country_uniq', 'unique(code, company_id, country_id)',
+         'Charge code must be unique per country and company.'),
     ]
 
     @api.constrains('amount_type', 'amount', 'rate')

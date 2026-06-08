@@ -2,8 +2,24 @@
 from odoo import api, fields, models
 
 
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    sa_operating_country_id = fields.Many2one(
+        'res.country', string='Property Operating Country',
+        help="Country whose property transfer taxes and charges are applied "
+             "automatically. Defaults to the company's own country.")
+
+
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
+
+    sa_operating_country_id = fields.Many2one(
+        'res.country', string='Property Operating Country',
+        related='company_id.sa_operating_country_id', readonly=False,
+        help="Select the country you operate in. Transfer taxes and "
+             "miscellaneous charges tagged with this country (or with no "
+             "country) are applied automatically on property transfers.")
 
     sa_default_area_uom = fields.Selection(
         [('marla', 'Marla'),

@@ -6,19 +6,26 @@ from odoo.exceptions import ValidationError
 class SaTransferTax(models.Model):
     """Configurable tax applied on a property transfer.
 
-    Covers Pakistani taxes such as CVT, Stamp Duty, Registration Fee,
-    Capital Gains Tax (CGT) and FBR withholding under Sec. 236C/236K.
+    Country-aware: each tax record is tagged with the country it applies to,
+    and the transfer engine only pulls taxes for the company's operating
+    country. Suitable for any market's transfer/stamp/registration/VAT/GST,
+    capital-gains and withholding levies.
     """
     _name = 'sa.transfer.tax'
     _description = 'Property Transfer Tax'
     _order = 'sequence, id'
 
     name = fields.Char(required=True, translate=True)
-    code = fields.Char(required=True, help="Short code, e.g. CVT, STAMP, REG.")
+    code = fields.Char(required=True, help="Short code, e.g. TRANSFER, STAMP, REG.")
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         'res.company', default=lambda self: self.env.company, required=True)
+    country_id = fields.Many2one(
+        'res.country', string='Country',
+        help="Country this tax applies to. Leave empty to make the tax apply "
+             "to every country. The transfer engine pulls taxes for the "
+             "operating country set in Property Management settings.")
 
     computation = fields.Selection(
         [('fixed', 'Fixed Amount'),
@@ -57,8 +64,8 @@ class SaTransferTax(models.Model):
         help="Restrict where this tax is auto-applied.")
 
     _sql_constraints = [
-        ('code_company_uniq', 'unique(code, company_id)',
-         'Tax code must be unique per company.'),
+        ('code_company_country_uniq', 'unique(code, company_id, country_id)',
+         'Tax code must be unique per country and company.'),
     ]
 
     @api.constrains('rate', 'fixed_amount', 'computation')
