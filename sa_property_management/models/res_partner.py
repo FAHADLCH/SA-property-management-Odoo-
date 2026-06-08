@@ -8,23 +8,23 @@ class ResPartner(models.Model):
 
     _sa_doc_type = _('Customer File')
 
-    # --- Identity (Pakistan) ---
-    sa_cnic = fields.Char(string='CNIC',
-                          help="Pakistani National Identity Card number "
-                               "(format: 12345-1234567-1).")
-    sa_ntn = fields.Char(string='NTN',
-                         help="National Tax Number issued by FBR.")
+    # --- Identity ---
+    sa_cnic = fields.Char(string='National ID',
+                          help="Government-issued national identity number "
+                               "(e.g. CNIC, SSN, Aadhaar, Emirates ID).")
+    sa_ntn = fields.Char(string='Tax ID',
+                         help="Taxpayer identification number (e.g. NTN, TIN, VAT).")
     sa_passport_no = fields.Char(string='Passport No.')
     sa_father_husband_name = fields.Char(
         string='Father / Husband Name',
-        help="Guardian name as printed on the CNIC.")
+        help="Guardian name as printed on the national ID, where applicable.")
     sa_dob = fields.Date(string='Date of Birth')
     sa_gender = fields.Selection(
         [('male', 'Male'),
          ('female', 'Female'),
          ('other', 'Other')],
         string='Gender')
-    sa_nationality = fields.Char(string='Nationality', default='Pakistani')
+    sa_nationality = fields.Char(string='Nationality')
     sa_occupation = fields.Char(string='Occupation')
 
     sa_is_property_customer = fields.Boolean(string='Property Customer')

@@ -1,23 +1,23 @@
-# SA Property Management — Pakistan Real Estate (Odoo 18 / 19)
+# SA Property Management by SA Systems (Odoo 18 / 19)
 
-End-to-end real estate management module tailored for the Pakistani market.
+End-to-end real estate management module for any country, with a country-aware tax engine.
 
 ## Features
 
 - **Project & Property Listing** — Housing societies, blocks, plots, apartments, commercial units.
-- **Pakistani Area Units** — Marla, Kanal, Sq.Ft, Sq.Yard, Sq.Meter pre-configured.
+- **Flexible Area Units** — Sq.Ft, Sq.Meter, Sq.Yard plus regional units (Marla, Kanal) pre-configured.
 - **Payment Plans** — Down payment + N installments (monthly/quarterly/etc.) + balloon payments + on-possession charge.
 - **Bookings** — One-click booking confirmation auto-generates installment schedule and customer invoices.
 - **Receivables Management** — Installment aging, overdue tracking, integrated with Odoo Accounting.
 - **Dealership Management** — Dealers/agents with auto-computed commissions per booking.
-- **Property Transfer System** — Owner-change workflow with configurable taxes (CVT, Stamp Duty, Registration Fee, FBR, CGT) and misc charges.
-- **Fully Configurable Backend** — Every tax, charge, journal, account and default UoM is data-driven via Settings.
+- **Property Transfer System** — Owner-change workflow with a country-aware tax engine (transfer/stamp duty, registration, capital gains, VAT/GST, withholding) and configurable misc charges.
+- **Fully Configurable Backend** — Operating country, every tax, charge, journal, account and default UoM is data-driven via Settings.
 - **Reports** — Booking confirmation, payment schedule, transfer deed.
 
 ## Compatibility
 
 - Odoo **18.0** and **19.0** (Community & Enterprise)
-- License: **OPL-1** (Odoo Proprietary License v1.0)
+- License: **LGPL-3** (free / open source)
 - Dependencies: `base`, `mail`, `account`, `product`, `portal`, `crm`
 
 > The module uses modern Odoo view syntax (`<list>`, `<chatter/>`,
@@ -53,7 +53,7 @@ End-to-end real estate management module tailored for the Pakistani market.
 1. **Property Management → Configuration → Payment Plans** — create a plan
    (e.g. 20% down, 36 monthly installments, balloon at month 24, 10% on possession).
 2. **Property Management → Configuration → Transfer Taxes & Misc Charges** —
-   demo data pre-seeds CVT, Stamp Duty, Registration Fee, File Transfer Fee, etc.
+   preset data seeds country-specific taxes and common charges for the selected market.
 3. **Property Management → Projects** — create a project, then add properties.
 4. **Property Management → Bookings** — create a booking, attach a payment plan, click **Confirm**.
    The schedule and the first invoice are generated automatically.
@@ -71,7 +71,7 @@ End-to-end real estate management module tailored for the Pakistani market.
 
 This module follows the official Odoo Apps guidelines:
 - Valid manifest with all required keys (`name`, `version`, `license`, `category`, `summary`).
-- OPL-1 (Odoo Proprietary License) license file included.
+- LGPL-3 (free / open source) license file included.
 - `static/description/index.html` description page with screenshots placeholder.
 - No external Python deps; only uses Odoo core modules.
 - Semantic version starts with the target Odoo major (`18.0.1.0.0`).

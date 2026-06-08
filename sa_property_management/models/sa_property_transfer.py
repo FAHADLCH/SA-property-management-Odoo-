@@ -153,13 +153,19 @@ class SaPropertyTransfer(models.Model):
         for rec in self:
             rec.tax_line_ids.unlink()
             rec.misc_line_ids.unlink()
+            country = (rec.company_id.sa_operating_country_id
+                       or rec.company_id.country_id)
+            country_domain = [('country_id', '=', False)]
+            if country:
+                country_domain = ['|', ('country_id', '=', False),
+                                  ('country_id', '=', country.id)]
             taxes = Tax.search([
                 ('active', '=', True),
                 ('company_id', '=', rec.company_id.id),
                 '|',
                 ('property_type_filter', '=', 'all'),
                 ('property_type_filter', '=', rec.property_id.property_type),
-            ])
+            ] + country_domain)
             for tax in taxes:
                 TaxLine.create({
                     'transfer_id': rec.id,
@@ -171,7 +177,7 @@ class SaPropertyTransfer(models.Model):
                 ('active', '=', True),
                 ('company_id', '=', rec.company_id.id),
                 ('apply_on', 'in', ('transfer', 'both')),
-            ])
+            ] + country_domain)
             for charge in misc:
                 MiscLine.create({
                     'transfer_id': rec.id,

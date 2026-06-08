@@ -9,6 +9,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="code"/>
                 <field name="name"/>
+                <field name="country_id" optional="show"/>
                 <field name="amount_type"/>
                 <field name="amount"/>
                 <field name="rate" optional="hide"/>
@@ -32,6 +33,7 @@
                         <group>
                             <field name="code"/>
                             <field name="name"/>
+                            <field name="country_id"/>
                             <field name="sequence"/>
                             <field name="active" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company"/>
