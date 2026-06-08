@@ -36,8 +36,8 @@ Built On
 --------
 Leverages Odoo core: ``account``, ``product``, ``mail``, ``portal`` and
 ``crm`` for invoicing, communications, customer self-service and lead-source
-integration. No external dependencies — runs on Odoo Online, Odoo.sh and
-On-Premise.
+integration. No external Python dependencies — deploys on Odoo.sh and
+on-premise (Community or Enterprise).
 
 Compatibility
 -------------
