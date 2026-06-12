@@ -7,70 +7,159 @@
 </head>
 <body>
 <!--
-    The Odoo Apps Store sanitizes description HTML (it strips <style> blocks,
-    external CSS and web fonts) and only honors Bootstrap 4 classes plus a
-    small whitelist of inline style attributes. To guarantee the branded design
-    renders on the live store, each section ships as an optimized image in this
-    same /static/description folder and is embedded with Bootstrap's responsive
-    .img-fluid class. No JavaScript, external CSS or non-whitelisted links.
+    Self-contained, inline-styled product page. The Odoo Apps description
+    sanitizer strips <style> blocks, external CSS and web fonts, but it keeps
+    standard tags + whitelisted inline style attributes, so the whole page is
+    rendered with inline styles only (no JS, no external CSS, no web fonts).
+    Keep the feature lists in sync with the module __manifest__ description.
 -->
-<section class="oe_screenshots container text-center">
-    <img class="img-fluid d-block mx-auto" src="sec_hero.jpg" alt="SA Property Management by SA Systems — real estate ERP for any country. Manage housing schemes, plots, apartments, payment plans, dealerships and property transfers with a country-aware tax engine built in. 6 core modules, 7+ country tax presets, Odoo 18 and 19, 100% configurable, free and open source, with a live booking and payment-plan dashboard."/>
-    <img class="img-fluid d-block mx-auto" src="sec_features.jpg" alt="Core features: property and inventory management, flexible payment plans, booking and invoicing through Odoo Accounting, receivables and aging tracking, dealership commission management and configurable property transfers."/>
-    <img class="img-fluid d-block mx-auto" src="sec_architecture.jpg" alt="Country-aware tax engine — define transfer taxes such as stamp duty, registration, capital gains, withholding, transfer tax, land department fees and miscellaneous charges per country, then pick your operating country in configuration. Ready-made presets ship for Pakistan, India, the US, the UK, the UAE, Saudi Arabia and Australia. Built natively on Odoo's Accounting, CRM, Discuss, Portal, Products and Contacts modules and deploys on Odoo.sh and on-premise."/>
-    <img class="img-fluid d-block mx-auto" src="sec_reports.jpg" alt="Professional documents and reports: booking confirmation, installment payment schedule and a tax-itemized property transfer deed."/>
-    <img class="img-fluid d-block mx-auto" src="sec_footer.jpg" alt="SA Property Management by SA Systems for Odoo 18 and 19. Free and open source, licensed under LGPL-3, and deployable on Odoo.sh and on-premise."/>
-</section>
+<div style="max-width:1100px;margin:0 auto;background:#0f0f0f;color:#e4e4e7;font-family:Helvetica,Arial,sans-serif;border-radius:14px;overflow:hidden;">
 
-<!--
-    Text feature summary. Survives the Apps-store HTML sanitizer (Bootstrap
-    classes + whitelisted inline styles only) so the v2.0 capabilities render
-    even where the section images above are cached. Keep this list in sync with
-    the module __manifest__ description.
--->
-<section class="container mt-4">
-    <h2 class="text-center" style="color:#0f0f0f;">Real estate and construction in one app</h2>
-    <p class="text-center" style="font-size:15px;color:#52525b;">
-        Version 2.0 adds a full construction management suite alongside the real-estate toolkit.
-    </p>
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <h3 style="color:#ff3c3c;">Real estate</h3>
-            <ul style="font-size:14px;color:#3f3f46;">
-                <li>Property listings with regional units (Marla, Kanal, Sq.Ft, Sq.M)</li>
-                <li>Payment plans with optional KIBOR / benchmark-linked variable rates</li>
-                <li>Bookings, invoicing and receivables aging via Odoo Accounting</li>
-                <li>Investor deals, dealership and commission management</li>
-                <li>Property transfers with country-aware taxes and transfer deed</li>
-                <li>Buyback &amp; surrender wizards, document management and QR verification</li>
-            </ul>
+    <!-- ===== HERO ===== -->
+    <div style="padding:48px 40px 40px 40px;background:#0f0f0f;">
+        <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
+            <tr>
+                <td style="font-size:18px;font-weight:bold;color:#ffffff;letter-spacing:1px;">⬡ SA SYSTEMS</td>
+                <td style="text-align:right;font-size:13px;color:#a1a1aa;">
+                    <span style="border:1px solid #3f3f46;border-radius:20px;padding:5px 12px;margin-left:6px;">Odoo <span style="color:#ff3c3c;">18 &amp; 19</span></span>
+                    <span style="border:1px solid #3f3f46;border-radius:20px;padding:5px 12px;margin-left:6px;">License <span style="color:#ff3c3c;">LGPL-3</span></span>
+                </td>
+            </tr>
+        </table>
+
+        <div style="display:inline-block;border:1px solid #ff3c3c;border-radius:20px;padding:5px 14px;font-size:12px;letter-spacing:2px;color:#ff7a6b;margin-bottom:18px;">
+            ⬢ REAL ESTATE &amp; CONSTRUCTION ERP · ANY COUNTRY
         </div>
-        <div class="col-md-6">
-            <h3 style="color:#ff3c3c;">Construction</h3>
-            <ul style="font-size:14px;color:#3f3f46;">
-                <li>Construction projects broken into phases with progress tracking</li>
-                <li>Subcontracts with a detailed Bill of Quantities (BOQ)</li>
-                <li>Interim Payment Certificates (IPC) for certified quantities</li>
-                <li>Material requisitions that raise Purchase RFQs automatically</li>
-                <li>Material issues to site with native Inventory stock moves</li>
-                <li>Project cost model on Analytic Accounting and Timesheets</li>
-            </ul>
+
+        <h1 style="font-size:54px;line-height:1.04;margin:0 0 18px 0;color:#ffffff;font-weight:bold;">
+            SA <span style="color:#ff3c3c;">Property</span> Management
+        </h1>
+
+        <p style="font-size:18px;line-height:1.55;color:#d4d4d8;max-width:760px;margin:0 0 26px 0;">
+            The complete real-estate <strong style="color:#ffffff;">and construction</strong> suite for
+            <strong style="color:#ffffff;">any market</strong> — housing schemes, plots and apartments,
+            <strong style="color:#ffffff;">payment plans</strong>, dealerships and property transfers, plus a full
+            <strong style="color:#ffffff;">construction</strong> workflow (projects, subcontracts, IPCs and procurement) with a
+            country-aware tax engine built in.
+        </p>
+
+        <div style="margin-bottom:36px;">
+            <span style="display:inline-block;background:#ff3c3c;color:#ffffff;font-weight:bold;font-size:15px;padding:13px 26px;border-radius:8px;">Get it on Odoo Apps</span>
+            <span style="display:inline-block;border:1px solid #14532d;color:#4ade80;font-size:15px;padding:13px 22px;border-radius:8px;margin-left:10px;">● Free &amp; open source</span>
         </div>
+
+        <!-- stat cards -->
+        <table style="width:100%;border-collapse:separate;border-spacing:12px 0;">
+            <tr>
+                <td style="width:25%;background:#161616;border:1px solid #27272a;border-radius:12px;padding:22px;">
+                    <div style="font-size:34px;font-weight:bold;color:#ffffff;">2</div>
+                    <div style="font-size:13px;color:#a1a1aa;">Suites — Real Estate + Construction</div>
+                </td>
+                <td style="width:25%;background:#161616;border:1px solid #27272a;border-radius:12px;padding:22px;">
+                    <div style="font-size:34px;font-weight:bold;color:#ffffff;">7<span style="color:#ff3c3c;">+</span></div>
+                    <div style="font-size:13px;color:#a1a1aa;">Country Tax Presets</div>
+                </td>
+                <td style="width:25%;background:#161616;border:1px solid #27272a;border-radius:12px;padding:22px;">
+                    <div style="font-size:34px;font-weight:bold;color:#ffffff;">18 / 19</div>
+                    <div style="font-size:13px;color:#a1a1aa;">Odoo Versions</div>
+                </td>
+                <td style="width:25%;background:#161616;border:1px solid #27272a;border-radius:12px;padding:22px;">
+                    <div style="font-size:34px;font-weight:bold;color:#ffffff;">49 <span style="color:#ff3c3c;">✓</span></div>
+                    <div style="font-size:13px;color:#a1a1aa;">Automated Tests Passing</div>
+                </td>
+            </tr>
+        </table>
     </div>
-    <p class="text-center mt-3" style="font-size:14px;color:#52525b;">
-        Single codebase verified on <strong>Odoo 18.0 and 19.0</strong> &mdash; 49 automated tests pass on both series.
-    </p>
-</section>
 
-<!-- Plain-text block: survives sanitization and keeps the support link clickable -->
-<section class="container text-center mt-4">
-    <p style="margin-bottom:6px;font-size:15px;color:#52525b;">
-        <strong style="color:#0f0f0f;">SA Property Management</strong> by SA Systems — country-aware real estate ERP for Odoo.
-    </p>
-    <p style="margin-bottom:0;font-size:14px;color:#52525b;">
-        Support and questions: <a href="mailto:info@sasystems.solutions" style="color:#ff3c3c;">info@sasystems.solutions</a>
-        &nbsp;·&nbsp; Free &amp; open source · Licensed under LGPL-3.
-    </p>
-</section>
+    <!-- ===== TWO SUITES ===== -->
+    <div style="padding:44px 40px;background:#141414;">
+        <h2 style="text-align:center;font-size:30px;color:#ffffff;margin:0 0 8px 0;">Two suites, one app</h2>
+        <p style="text-align:center;font-size:15px;color:#a1a1aa;margin:0 0 32px 0;">
+            Version 2.0 adds a complete construction management subsystem alongside the real-estate toolkit.
+        </p>
+
+        <table style="width:100%;border-collapse:separate;border-spacing:16px 0;">
+            <tr style="vertical-align:top;">
+                <!-- Real estate -->
+                <td style="width:50%;background:#0f0f0f;border:1px solid #27272a;border-radius:12px;padding:28px;">
+                    <h3 style="color:#ff3c3c;font-size:20px;margin:0 0 16px 0;">🏠 Real Estate</h3>
+                    <ul style="font-size:14px;line-height:1.7;color:#d4d4d8;padding-left:20px;margin:0;">
+                        <li>Property listings with regional units (Marla, Kanal, Sq.Ft, Sq.M)</li>
+                        <li>Project / housing-society layout with blocks, streets and plots</li>
+                        <li>Payment plans with optional <strong style="color:#ffffff;">KIBOR / benchmark-linked</strong> variable rates</li>
+                        <li>Bookings, invoicing and receivables aging via Odoo Accounting</li>
+                        <li>Investor deals, dealership and <strong style="color:#ffffff;">commission</strong> management</li>
+                        <li>Property transfers with country-aware taxes and transfer deed</li>
+                        <li>Buyback &amp; surrender wizards, document management, QR verification</li>
+                        <li>Live dashboard for bookings, receivables and plan status</li>
+                    </ul>
+                </td>
+                <!-- Construction -->
+                <td style="width:50%;background:#0f0f0f;border:1px solid #27272a;border-radius:12px;padding:28px;">
+                    <h3 style="color:#ff3c3c;font-size:20px;margin:0 0 16px 0;">🏗️ Construction</h3>
+                    <ul style="font-size:14px;line-height:1.7;color:#d4d4d8;padding-left:20px;margin:0;">
+                        <li>Construction projects broken into <strong style="color:#ffffff;">phases</strong> with progress tracking</li>
+                        <li>Subcontracts with a detailed <strong style="color:#ffffff;">Bill of Quantities (BOQ)</strong></li>
+                        <li><strong style="color:#ffffff;">Interim Payment Certificates (IPC)</strong> certifying executed quantities</li>
+                        <li>Material requisitions that raise <strong style="color:#ffffff;">Purchase RFQs</strong> automatically</li>
+                        <li>Material issues to site with native <strong style="color:#ffffff;">Inventory</strong> stock moves</li>
+                        <li>Project <strong style="color:#ffffff;">cost model</strong> on Analytic Accounting and Timesheets</li>
+                        <li>Certified-vs-contract tracking to control over-billing</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== TAX ENGINE ===== -->
+    <div style="padding:44px 40px;background:#0f0f0f;">
+        <h2 style="text-align:center;font-size:26px;color:#ffffff;margin:0 0 12px 0;">Country-aware tax engine</h2>
+        <p style="text-align:center;font-size:15px;line-height:1.6;color:#d4d4d8;max-width:820px;margin:0 auto 18px auto;">
+            Define transfer taxes — stamp duty, registration, capital gains, VAT/GST, withholding, land-department fees —
+            and miscellaneous charges per country, then simply pick your operating country in Configuration.
+            Ready-made presets ship for several markets and you can add your own. No hard-coded country logic.
+        </p>
+        <p style="text-align:center;font-size:13px;color:#a1a1aa;margin:0;">
+            Built natively on Odoo
+            <span style="color:#ffffff;">Accounting, Sales, Inventory, Purchase, Project, Timesheets, CRM, Discuss, Portal, Products &amp; Contacts</span>.
+        </p>
+    </div>
+
+    <!-- ===== DOCUMENTS / REPORTS ===== -->
+    <div style="padding:44px 40px;background:#141414;">
+        <h2 style="text-align:center;font-size:26px;color:#ffffff;margin:0 0 26px 0;">Professional documents &amp; reports</h2>
+        <table style="width:100%;border-collapse:separate;border-spacing:12px 0;">
+            <tr style="vertical-align:top;">
+                <td style="width:33%;background:#0f0f0f;border:1px solid #27272a;border-radius:12px;padding:22px;text-align:center;">
+                    <div style="font-size:15px;font-weight:bold;color:#ffffff;margin-bottom:6px;">Booking Confirmation</div>
+                    <div style="font-size:13px;color:#a1a1aa;">Branded confirmation with the full deal summary.</div>
+                </td>
+                <td style="width:33%;background:#0f0f0f;border:1px solid #27272a;border-radius:12px;padding:22px;text-align:center;">
+                    <div style="font-size:15px;font-weight:bold;color:#ffffff;margin-bottom:6px;">Installment Schedule</div>
+                    <div style="font-size:13px;color:#a1a1aa;">Payment plan with due dates, amounts and status.</div>
+                </td>
+                <td style="width:33%;background:#0f0f0f;border:1px solid #27272a;border-radius:12px;padding:22px;text-align:center;">
+                    <div style="font-size:15px;font-weight:bold;color:#ffffff;margin-bottom:6px;">Transfer Deed</div>
+                    <div style="font-size:13px;color:#a1a1aa;">Tax-itemized property transfer deed.</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div style="padding:38px 40px;background:#0f0f0f;border-top:1px solid #27272a;text-align:center;">
+        <p style="font-size:16px;color:#ffffff;margin:0 0 8px 0;">
+            <strong>SA Property Management</strong> — country-aware real estate &amp; construction ERP for Odoo.
+        </p>
+        <p style="font-size:14px;color:#a1a1aa;margin:0 0 6px 0;">
+            Verified on <strong style="color:#e4e4e7;">Odoo 18.0 and 19.0</strong> from a single codebase — 49 automated tests pass on both series.
+        </p>
+        <p style="font-size:14px;color:#a1a1aa;margin:0;">
+            Support: <a href="mailto:info@sasystems.solutions" style="color:#ff3c3c;text-decoration:none;">info@sasystems.solutions</a>
+            &nbsp;·&nbsp; Free &amp; open source · Licensed under LGPL-3 · Deploys on Odoo.sh and on-premise.
+        </p>
+    </div>
+
+</div>
 </body>
 </html>
