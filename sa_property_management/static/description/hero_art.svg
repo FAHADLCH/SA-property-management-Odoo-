@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 320" width="440" height="320" role="img" aria-label="Real estate towers and a construction crane">
+  <!-- blueprint accent -->
+  <circle cx="368" cy="66" r="48" fill="none" stroke="#ff3c3c" stroke-width="1.5" opacity="0.45"/>
+  <circle cx="368" cy="66" r="30" fill="#ff3c3c" opacity="0.10"/>
+
+  <!-- ground line -->
+  <line x1="16" y1="290" x2="424" y2="290" stroke="#5b1c1f" stroke-width="2"/>
+  <line x1="16" y1="298" x2="424" y2="298" stroke="#321115" stroke-width="2" opacity="0.7"/>
+
+  <!-- Tower A (tall) -->
+  <rect x="52" y="96" width="74" height="194" rx="5" fill="#180e11" stroke="#ff3c3c" stroke-width="2"/>
+  <rect x="64" y="112" width="14" height="14" fill="#ff3c3c" opacity="0.85"/>
+  <rect x="86" y="112" width="14" height="14" fill="#ff7a6b" opacity="0.55"/>
+  <rect x="108" y="112" width="10" height="14" fill="#ff3c3c" opacity="0.35"/>
+  <rect x="64" y="138" width="14" height="14" fill="#ff7a6b" opacity="0.45"/>
+  <rect x="86" y="138" width="14" height="14" fill="#ff3c3c" opacity="0.85"/>
+  <rect x="108" y="138" width="10" height="14" fill="#ff7a6b" opacity="0.4"/>
+  <rect x="64" y="164" width="14" height="14" fill="#ff3c3c" opacity="0.6"/>
+  <rect x="86" y="164" width="14" height="14" fill="#ff7a6b" opacity="0.4"/>
+  <rect x="64" y="190" width="14" height="14" fill="#ff7a6b" opacity="0.5"/>
+  <rect x="86" y="190" width="14" height="14" fill="#ff3c3c" opacity="0.75"/>
+  <rect x="64" y="216" width="14" height="14" fill="#ff3c3c" opacity="0.5"/>
+  <rect x="86" y="216" width="14" height="14" fill="#ff7a6b" opacity="0.35"/>
+  <rect x="84" y="84" width="10" height="12" fill="#ff3c3c"/>
+
+  <!-- Tower B (mid) -->
+  <rect x="134" y="150" width="60" height="140" rx="5" fill="#140c0f" stroke="#ff7a6b" stroke-width="2" opacity="0.95"/>
+  <rect x="144" y="166" width="12" height="12" fill="#ff7a6b" opacity="0.6"/>
+  <rect x="164" y="166" width="12" height="12" fill="#ff3c3c" opacity="0.7"/>
+  <rect x="144" y="188" width="12" height="12" fill="#ff3c3c" opacity="0.55"/>
+  <rect x="164" y="188" width="12" height="12" fill="#ff7a6b" opacity="0.45"/>
+  <rect x="144" y="210" width="12" height="12" fill="#ff7a6b" opacity="0.4"/>
+  <rect x="164" y="210" width="12" height="12" fill="#ff3c3c" opacity="0.6"/>
+
+  <!-- Plot / low block -->
+  <rect x="200" y="224" width="48" height="66" rx="4" fill="#180e11" stroke="#5b1c1f" stroke-width="2"/>
+  <path d="M200 224 L224 206 L248 224 Z" fill="#ff3c3c" opacity="0.30"/>
+  <rect x="216" y="250" width="16" height="40" fill="#ff3c3c" opacity="0.18"/>
+
+  <!-- Construction crane -->
+  <rect x="296" y="120" width="12" height="170" fill="#221318" stroke="#ff3c3c" stroke-width="2"/>
+  <line x1="296" y1="150" x2="308" y2="170" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <line x1="308" y1="150" x2="296" y2="170" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <line x1="296" y1="190" x2="308" y2="210" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <line x1="308" y1="190" x2="296" y2="210" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <line x1="296" y1="230" x2="308" y2="250" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <line x1="308" y1="230" x2="296" y2="250" stroke="#ff3c3c" stroke-width="1.5" opacity="0.6"/>
+  <!-- jib -->
+  <line x1="248" y1="112" x2="404" y2="112" stroke="#ff3c3c" stroke-width="3"/>
+  <line x1="262" y1="112" x2="302" y2="86" stroke="#ff7a6b" stroke-width="2" opacity="0.7"/>
+  <line x1="392" y1="112" x2="302" y2="86" stroke="#ff7a6b" stroke-width="2" opacity="0.7"/>
+  <rect x="298" y="80" width="14" height="10" fill="#ff3c3c"/>
+  <!-- counterweight -->
+  <rect x="250" y="112" width="18" height="14" fill="#b81d1d"/>
+  <!-- hook line + load -->
+  <line x1="372" y1="112" x2="372" y2="196" stroke="#e4e4e7" stroke-width="1.5" opacity="0.7"/>
+  <rect x="360" y="196" width="24" height="18" rx="2" fill="#ff3c3c" opacity="0.85"/>
+</svg>
