@@ -76,6 +76,24 @@ class SaPropertyTransfer(models.Model):
     move_state = fields.Selection(
         related='move_id.state', readonly=True)
 
+    checklist_ids = fields.One2many(
+        'sa.property.transfer.checklist', 'transfer_id',
+        string='Documentation Checklist', copy=True)
+    document_ids = fields.One2many(
+        'sa.property.document', 'transfer_id', string='Documents', copy=False)
+    document_count = fields.Integer(
+        compute='_compute_documentation', store=False)
+    checklist_total = fields.Integer(
+        compute='_compute_documentation', store=False)
+    checklist_done = fields.Integer(
+        compute='_compute_documentation', store=False)
+    checklist_progress = fields.Float(
+        string='Checklist Progress', compute='_compute_documentation',
+        store=False, help="Share of checklist items received (0-100).")
+    checklist_complete = fields.Boolean(
+        compute='_compute_documentation', store=False,
+        help="True when every required checklist item has been received.")
+
     note = fields.Text()
 
     _sql_constraints = [
@@ -142,6 +160,20 @@ class SaPropertyTransfer(models.Model):
             rec.total_seller_deductions = tax_seller + misc_seller
             rec.net_to_seller = (rec.sale_price or 0.0) - tax_seller - misc_seller
 
+    @api.depends('document_ids', 'checklist_ids',
+                 'checklist_ids.is_done', 'checklist_ids.required')
+    def _compute_documentation(self):
+        for rec in self:
+            rec.document_count = len(rec.document_ids)
+            total = len(rec.checklist_ids)
+            done = len(rec.checklist_ids.filtered('is_done'))
+            required_pending = rec.checklist_ids.filtered(
+                lambda l: l.required and not l.is_done)
+            rec.checklist_total = total
+            rec.checklist_done = done
+            rec.checklist_progress = (done / total * 100.0) if total else 0.0
+            rec.checklist_complete = not required_pending
+
     # ----- Actions -----
 
     def action_apply_default_taxes(self):
@@ -206,6 +238,14 @@ class SaPropertyTransfer(models.Model):
         for rec in self:
             if rec.state != 'approved':
                 raise UserError(_("Only approved transfers can be completed."))
+            if rec.checklist_ids and not rec.checklist_complete:
+                pending = rec.checklist_ids.filtered(
+                    lambda l: l.required and not l.is_done)
+                raise UserError(_(
+                    "Cannot complete transfer '%(name)s': the following "
+                    "required documents are still pending:\n%(items)s",
+                    name=rec.name,
+                    items='\n'.join('- %s' % l.name for l in pending)))
             rec._create_accounting_entry()
             rec.property_id.write({
                 'current_owner_id': rec.to_partner_id.id,
@@ -329,6 +369,56 @@ class SaPropertyTransfer(models.Model):
             'view_mode': 'form',
         }
 
+    # ----- Documentation -----
+
+    def action_load_default_checklist(self):
+        """Populate the standard transfer-documentation checklist.
+
+        Existing items are preserved; only missing standard requirements are
+        added so the action is safe to re-run.
+        """
+        default_items = [
+            (_('Seller CNIC copy'), 'seller'),
+            (_('Buyer CNIC copy'), 'buyer'),
+            (_('Original allotment / registry file'), 'seller'),
+            (_('Society / authority NOC'), 'authority'),
+            (_('No Demand Certificate (NDC)'), 'authority'),
+            (_('Transfer deed (signed)'), 'agency'),
+            (_('FBR / CVT tax challan'), 'buyer'),
+            (_('Stamp duty challan'), 'buyer'),
+            (_('Passport-size photographs'), 'buyer'),
+            (_('Transfer affidavit'), 'agency'),
+        ]
+        Checklist = self.env['sa.property.transfer.checklist']
+        for rec in self:
+            existing = set(rec.checklist_ids.mapped('name'))
+            seq = 10
+            for label, responsible in default_items:
+                if label not in existing:
+                    Checklist.create({
+                        'transfer_id': rec.id,
+                        'name': label,
+                        'responsible': responsible,
+                        'sequence': seq,
+                    })
+                seq += 10
+
+    def action_view_documents(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Documents - %s', self.name),
+            'res_model': 'sa.property.document',
+            'view_mode': 'list,form',
+            'domain': [('transfer_id', '=', self.id)],
+            'context': {
+                'default_transfer_id': self.id,
+                'default_property_id': self.property_id.id,
+                'default_partner_id': self.to_partner_id.id,
+                'default_document_type': 'transfer_deed',
+            },
+        }
+
     def action_print_deed(self):
         self.ensure_one()
         return self.env.ref(
@@ -379,3 +469,40 @@ class SaTransferMiscLine(models.Model):
          ('shared', 'Shared')],
         required=True, default='buyer')
     amount = fields.Monetary(currency_field='currency_id', required=True)
+
+
+class SaTransferChecklist(models.Model):
+    """A required-documents checklist item for an ownership transfer."""
+    _name = 'sa.property.transfer.checklist'
+    _description = 'Property Transfer Checklist Item'
+    _order = 'sequence, id'
+
+    transfer_id = fields.Many2one(
+        'sa.property.transfer', required=True, ondelete='cascade', index=True)
+    company_id = fields.Many2one(
+        related='transfer_id.company_id', store=True, readonly=True)
+    property_id = fields.Many2one(
+        related='transfer_id.property_id', store=True, readonly=True)
+    sequence = fields.Integer(default=10)
+
+    name = fields.Char(string='Requirement', required=True)
+    responsible = fields.Selection(
+        [('buyer', 'Buyer'),
+         ('seller', 'Seller'),
+         ('agency', 'Agency'),
+         ('authority', 'Authority')],
+        string='Provided By', default='seller')
+    required = fields.Boolean(default=True)
+    is_done = fields.Boolean(string='Received')
+    received_date = fields.Date()
+    document_id = fields.Many2one(
+        'sa.property.document', string='Linked Document',
+        ondelete='set null',
+        domain="[('property_id', '=', property_id)]")
+    note = fields.Char()
+
+    @api.onchange('is_done')
+    def _onchange_is_done(self):
+        if self.is_done and not self.received_date:
+            self.received_date = fields.Date.context_today(self)
+

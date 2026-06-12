@@ -64,6 +64,10 @@
                                 invisible="not move_id">
                             <span class="o_stat_text">Journal Entry</span>
                         </button>
+                        <button name="action_view_documents" type="object"
+                                class="oe_stat_button" icon="fa-folder-open-o">
+                            <field name="document_count" widget="statinfo" string="Documents"/>
+                        </button>
                     </div>
                     <div class="oe_title">
                         <label for="name"/>
@@ -125,6 +129,37 @@
                                            class="oe_subtotal_footer_separator"/>
                                 </group>
                             </group>
+                        </page>
+                        <page string="Documentation" name="documentation">
+                            <group>
+                                <group>
+                                    <field name="checklist_progress" widget="progressbar"/>
+                                    <field name="checklist_done"/>
+                                    <field name="checklist_total"/>
+                                    <field name="checklist_complete"/>
+                                </group>
+                                <group>
+                                    <button name="action_load_default_checklist"
+                                            type="object" string="Load Standard Checklist"
+                                            class="btn-secondary" icon="fa-list-ul"
+                                            invisible="state in ('completed', 'cancelled')"/>
+                                </group>
+                            </group>
+                            <field name="checklist_ids"
+                                   readonly="state in ('completed', 'cancelled')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="responsible"/>
+                                    <field name="required"/>
+                                    <field name="is_done" widget="boolean_toggle"/>
+                                    <field name="received_date"/>
+                                    <field name="document_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="note"/>
+                                    <field name="property_id" column_invisible="1"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Notes">
                             <field name="note"/>
