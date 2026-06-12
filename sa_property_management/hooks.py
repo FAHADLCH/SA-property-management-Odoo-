@@ -4,11 +4,15 @@ from odoo import release
 # XML IDs of the security groups that should be grouped under the
 # "Property Management" category / privilege heading in Settings > Users.
 _GROUP_XMLIDS = (
+    "sa_property_management.group_sa_property_agent",
     "sa_property_management.group_sa_property_user",
     "sa_property_management.group_sa_property_manager",
+    "sa_property_management.group_sa_construction_user",
+    "sa_property_management.group_sa_construction_manager",
 )
 _CATEGORY_XMLID = "sa_property_management.module_category_sa_property"
 _MANAGER_XMLID = "sa_property_management.group_sa_property_manager"
+_CONSTRUCTION_MANAGER_XMLID = "sa_property_management.group_sa_construction_manager"
 
 
 def post_init_hook(env):
@@ -66,3 +70,8 @@ def post_init_hook(env):
         )
         if admins:
             manager.write({users_field: [(4, uid) for uid in admins.ids]})
+            construction_manager = env.ref(
+                _CONSTRUCTION_MANAGER_XMLID, raise_if_not_found=False)
+            if construction_manager:
+                construction_manager.write(
+                    {users_field: [(4, uid) for uid in admins.ids]})

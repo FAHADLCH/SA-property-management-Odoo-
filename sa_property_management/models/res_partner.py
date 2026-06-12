@@ -29,6 +29,7 @@ class ResPartner(models.Model):
 
     sa_is_property_customer = fields.Boolean(string='Property Customer')
     sa_is_property_dealer = fields.Boolean(string='Is Property Dealer')
+    sa_is_property_investor = fields.Boolean(string='Is Property Investor')
     sa_dealer_id = fields.Many2one(
         'sa.property.dealer', string='Dealer Record',
         compute='_compute_sa_dealer_id', store=False)

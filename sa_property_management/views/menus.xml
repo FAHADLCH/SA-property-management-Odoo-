@@ -6,7 +6,7 @@
               name="Property Management"
               web_icon="sa_property_management,static/description/icon.png"
               sequence="40"
-              groups="sa_property_management.group_sa_property_user"/>
+              groups="sa_property_management.group_sa_property_user,sa_property_management.group_sa_construction_user"/>
 
     <!-- Operations -->
     <menuitem id="menu_sa_dashboard"
@@ -63,6 +63,12 @@
               action="action_sa_property_transfer"
               sequence="50"/>
 
+    <menuitem id="menu_sa_documents"
+              name="Documents"
+              parent="menu_sa_property_root"
+              action="action_sa_property_document"
+              sequence="55"/>
+
     <menuitem id="menu_sa_dealers"
               name="Dealers"
               parent="menu_sa_property_root"
@@ -75,11 +81,60 @@
               action="action_sa_dealer_allocation"
               sequence="65"/>
 
+    <menuitem id="menu_sa_commissions"
+              name="Commissions"
+              parent="menu_sa_property_root"
+              action="action_sa_commission"
+              sequence="67"/>
+
+    <menuitem id="menu_sa_deals"
+              name="Investor Deals"
+              parent="menu_sa_property_root"
+              action="action_sa_property_deal"
+              sequence="68"/>
+
     <menuitem id="menu_sa_service_billing"
               name="Service Billing"
               parent="menu_sa_property_root"
               action="action_sa_service_assignment"
               sequence="70"/>
+
+    <!-- Construction -->
+    <menuitem id="menu_sa_construction"
+              name="Construction"
+              parent="menu_sa_property_root"
+              sequence="75"
+              groups="sa_property_management.group_sa_construction_user"/>
+
+    <menuitem id="menu_sa_construction_projects"
+              name="Construction Projects"
+              parent="menu_sa_construction"
+              action="action_sa_construction_project"
+              sequence="10"/>
+
+    <menuitem id="menu_sa_construction_contracts"
+              name="Subcontracts"
+              parent="menu_sa_construction"
+              action="action_sa_construction_contract"
+              sequence="20"/>
+
+    <menuitem id="menu_sa_construction_ipc"
+              name="Payment Certificates"
+              parent="menu_sa_construction"
+              action="action_sa_construction_ipc"
+              sequence="30"/>
+
+    <menuitem id="menu_sa_construction_requisitions"
+              name="Material Requisitions"
+              parent="menu_sa_construction"
+              action="action_sa_construction_requisition"
+              sequence="40"/>
+
+    <menuitem id="menu_sa_construction_issues"
+              name="Material Issues"
+              parent="menu_sa_construction"
+              action="action_sa_construction_material_issue"
+              sequence="50"/>
 
     <!-- Configuration -->
     <menuitem id="menu_sa_configuration"
@@ -99,6 +154,12 @@
               parent="menu_sa_configuration"
               action="action_sa_payment_plan"
               sequence="10"/>
+
+    <menuitem id="menu_sa_kibor_rates"
+              name="KIBOR Rates"
+              parent="menu_sa_configuration"
+              action="action_sa_kibor_rate"
+              sequence="15"/>
 
     <menuitem id="menu_sa_transfer_taxes"
               name="Transfer Taxes"

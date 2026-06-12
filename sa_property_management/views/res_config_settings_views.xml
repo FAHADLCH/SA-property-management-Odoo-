@@ -39,6 +39,16 @@
                                  string="Default Income Account">
                             <field name="sa_default_property_income_account_id"/>
                         </setting>
+                        <setting id="sa_commission_expense_account_id"
+                                 string="Commission Expense Account"
+                                 help="Used on vendor bills for dealer and investor commissions.">
+                            <field name="sa_commission_expense_account_id"/>
+                        </setting>
+                        <setting id="sa_penalty_income_account_id"
+                                 string="Penalty Income Account"
+                                 help="Used on invoices raised for late-payment penalties.">
+                            <field name="sa_penalty_income_account_id"/>
+                        </setting>
                         <setting id="sa_default_payment_term_id"
                                  string="Default Payment Terms"
                                  help="Native Odoo payment terms used on bookings, service bills and their invoices.">

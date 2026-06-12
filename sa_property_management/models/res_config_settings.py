@@ -48,6 +48,20 @@ class ResConfigSettings(models.TransientModel):
         string='Default Dealer Commission (%)', digits=(6, 2), default=2.0,
         config_parameter='sa_property_management.default_dealer_commission')
 
+    sa_commission_expense_account_id = fields.Many2one(
+        'account.account', string='Commission Expense Account',
+        domain="[('account_type', '=', 'expense')]",
+        config_parameter='sa_property_management.commission_expense_account_id',
+        help="Expense account used on vendor bills generated for dealer and "
+             "investor commissions. Falls back to the first expense account.")
+
+    sa_penalty_income_account_id = fields.Many2one(
+        'account.account', string='Penalty Income Account',
+        domain="[('account_type', '=', 'income')]",
+        config_parameter='sa_property_management.penalty_income_account_id',
+        help="Income account used on invoices raised for late-payment "
+             "penalties. Falls back to the property income account.")
+
     sa_currency_id = fields.Many2one(
         'res.currency', string='Property Currency (PKR recommended)',
         config_parameter='sa_property_management.currency_id')

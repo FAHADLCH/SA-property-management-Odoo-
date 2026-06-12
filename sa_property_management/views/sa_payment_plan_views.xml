@@ -59,6 +59,27 @@
                                 referenced installment number (e.g. a 5% balloon at
                                 month 12 in a monthly plan).</p>
                         </page>
+                        <page string="Late Penalty">
+                            <group>
+                                <group>
+                                    <field name="penalty_type"/>
+                                    <field name="penalty_grace_days"/>
+                                </group>
+                                <group>
+                                    <field name="penalty_value"
+                                           invisible="penalty_type not in ('flat', 'percent')"/>
+                                    <field name="penalty_kibor_tenor"
+                                           invisible="penalty_type != 'kibor'"/>
+                                    <field name="penalty_kibor_spread"
+                                           invisible="penalty_type != 'kibor'"/>
+                                </group>
+                            </group>
+                            <p class="text-muted">
+                                Penalties accrue per day on the overdue amount after the
+                                grace period. The KIBOR method uses the effective-dated
+                                rate maintained under Configuration → KIBOR Rates.
+                            </p>
+                        </page>
                         <page string="Notes">
                             <field name="note"/>
                         </page>
