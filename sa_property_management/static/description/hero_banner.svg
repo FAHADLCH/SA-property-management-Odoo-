@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <radialGradient id="bg" cx="86%" cy="-8%" r="115%">
+      <stop offset="0%" stop-color="#5a1418"/>
+      <stop offset="34%" stop-color="#23090c"/>
+      <stop offset="72%" stop-color="#0d0d0f"/>
+      <stop offset="100%" stop-color="#08080a"/>
+    </radialGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff4a3c"/>
+      <stop offset="100%" stop-color="#ad1e22"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#221318"/>
+      <stop offset="100%" stop-color="#0e0e11"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a1d22"/>
+      <stop offset="100%" stop-color="#160d10"/>
+    </linearGradient>
+  </defs>
+
+  <!-- backdrop -->
+  <rect width="1120" height="400" rx="18" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1119" height="399" rx="18" fill="none" stroke="#2a161a" stroke-width="1"/>
+
+  <!-- faint guide grid -->
+  <g stroke="#ff3c3c" stroke-width="1" opacity="0.05">
+    <line x1="0" y1="100" x2="1120" y2="100"/>
+    <line x1="0" y1="200" x2="1120" y2="200"/>
+    <line x1="0" y1="300" x2="1120" y2="300"/>
+  </g>
+
+  <!-- ===== brand lockup ===== -->
+  <g transform="translate(56,46)">
+    <polygon points="20,0 38,10 38,30 20,40 2,30 2,10" fill="url(#red)"/>
+    <polygon points="20,8 31,14 31,26 20,32 9,26 9,14" fill="#0d0d0f"/>
+    <polygon points="20,13 26,16 26,24 20,27 14,24 14,16" fill="#ff6b60"/>
+    <text x="52" y="17" fill="#ffffff" font-size="19" font-weight="bold" letter-spacing="0.6">SA Systems</text>
+    <text x="52" y="34" fill="#d4a5a9" font-size="11" letter-spacing="2.4">PROPERTY + CONSTRUCTION INTELLIGENCE</text>
+  </g>
+
+  <!-- pills top-right -->
+  <g transform="translate(0,52)" font-size="12.5" font-weight="bold">
+    <rect x="858" y="0" width="118" height="30" rx="15" fill="none" stroke="#5a2a2e" stroke-width="1.2"/>
+    <text x="877" y="20" fill="#cfcfd4">Odoo <tspan fill="#ff6b60">18 &amp; 19</tspan></text>
+    <rect x="986" y="0" width="78" height="30" rx="15" fill="none" stroke="#5a2a2e" stroke-width="1.2"/>
+    <text x="1001" y="20" fill="#ff6b60">LGPL-3</text>
+  </g>
+
+  <!-- ===== headline block ===== -->
+  <g transform="translate(56,130)">
+    <rect x="0" y="0" width="384" height="32" rx="16" fill="url(#red)"/>
+    <text x="18" y="21" fill="#ffffff" font-size="12.5" font-weight="bold" letter-spacing="2.2">REAL ESTATE + CONSTRUCTION ERP &#183; GLOBAL READY</text>
+
+    <text x="0" y="98" font-size="58" font-weight="bold" letter-spacing="-1.5">
+      <tspan fill="#ffffff">SA </tspan><tspan fill="#ff3c3c">Property</tspan>
+    </text>
+    <text x="0" y="150" font-size="58" font-weight="bold" letter-spacing="-1.5" fill="#ffffff">Management</text>
+
+    <text x="2" y="196" font-size="17" fill="#d4d4d8">One Odoo app for property sales <tspan fill="#ff7a6b" font-weight="bold">and</tspan> construction delivery —</text>
+    <text x="2" y="222" font-size="17" fill="#d4d4d8">payment plans, country-aware taxes, subcontracts, IPCs &amp; procurement.</text>
+  </g>
+
+  <!-- ===== skyline + crane art (right) ===== -->
+  <g transform="translate(720,150)">
+    <!-- ground -->
+    <line x1="-10" y1="196" x2="360" y2="196" stroke="#5a2a2e" stroke-width="2"/>
+
+    <!-- tall tower -->
+    <rect x="40" y="44" width="86" height="152" fill="url(#tower)" stroke="#6e3035" stroke-width="1.5"/>
+    <g fill="#ff6b60" opacity="0.85">
+      <rect x="52" y="58" width="14" height="14"/><rect x="74" y="58" width="14" height="14"/><rect x="96" y="58" width="14" height="14"/>
+      <rect x="52" y="82" width="14" height="14"/><rect x="74" y="82" width="14" height="14"/><rect x="96" y="82" width="14" height="14"/>
+      <rect x="52" y="106" width="14" height="14"/><rect x="74" y="106" width="14" height="14"/><rect x="96" y="106" width="14" height="14"/>
+      <rect x="52" y="130" width="14" height="14"/><rect x="74" y="130" width="14" height="14"/><rect x="96" y="130" width="14" height="14"/>
+      <rect x="52" y="154" width="14" height="14"/><rect x="74" y="154" width="14" height="14"/><rect x="96" y="154" width="14" height="14"/>
+    </g>
+
+    <!-- mid tower -->
+    <rect x="140" y="92" width="64" height="104" fill="url(#tower)" stroke="#6e3035" stroke-width="1.5"/>
+    <g fill="#ffae9f" opacity="0.8">
+      <rect x="150" y="104" width="12" height="12"/><rect x="170" y="104" width="12" height="12"/><rect x="190" y="104" width="12" height="12"/>
+      <rect x="150" y="126" width="12" height="12"/><rect x="170" y="126" width="12" height="12"/><rect x="190" y="126" width="12" height="12"/>
+      <rect x="150" y="148" width="12" height="12"/><rect x="170" y="148" width="12" height="12"/><rect x="190" y="148" width="12" height="12"/>
+    </g>
+
+    <!-- under-construction frame -->
+    <rect x="222" y="120" width="66" height="76" fill="none" stroke="#8a4147" stroke-width="2"/>
+    <line x1="222" y1="144" x2="288" y2="144" stroke="#8a4147" stroke-width="1.5"/>
+    <line x1="222" y1="168" x2="288" y2="168" stroke="#8a4147" stroke-width="1.5"/>
+    <line x1="255" y1="120" x2="255" y2="196" stroke="#8a4147" stroke-width="1.5"/>
+
+    <!-- tower crane -->
+    <g stroke="#ff3c3c" stroke-width="3" fill="none" stroke-linecap="round">
+      <line x1="300" y1="196" x2="300" y2="40"/>
+      <line x1="300" y1="40" x2="200" y2="40"/>
+      <line x1="300" y1="40" x2="352" y2="40"/>
+      <line x1="300" y1="40" x2="232" y2="62"/>
+      <line x1="300" y1="40" x2="338" y2="62"/>
+    </g>
+    <line x1="232" y1="40" x2="232" y2="86" stroke="#ff7a6b" stroke-width="2.5"/>
+    <rect x="222" y="86" width="20" height="14" fill="url(#red)"/>
+    <rect x="346" y="34" width="14" height="14" fill="#ff7a6b"/>
+    <circle cx="300" cy="40" r="5" fill="#ffffff"/>
+  </g>
+</svg>
