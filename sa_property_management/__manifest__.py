@@ -162,6 +162,6 @@ both series.
     },
 
     'images': [
-        'static/description/banner.png',
+        'static/description/banner.svg',
     ],
 }
