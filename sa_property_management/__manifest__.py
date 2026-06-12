@@ -50,8 +50,9 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'license': 'LGPL-3',
     'category': 'Services/Real Estate',
     # Series-agnostic version so the module installs on Odoo 18 and 19 alike
-    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
-    'version': '1.0.0',
+    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa). Odoo prefixes
+    # the running series automatically, so this reports as 2.0 on both.
+    'version': '2.0.0',
     'application': True,
     'installable': True,
     'auto_install': False,
