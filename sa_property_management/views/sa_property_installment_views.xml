@@ -21,7 +21,9 @@
                 <field name="amount_paid" sum="Paid"/>
                 <field name="amount_residual" sum="Residual"/>
                 <field name="days_overdue" optional="hide"/>
+                <field name="penalty_amount" sum="Penalty" optional="show"/>
                 <field name="state" widget="badge"/>
+                <field name="penalty_billed" column_invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <button name="action_generate_invoice" type="object" string="Invoice"
                         icon="fa-file-text-o"
@@ -29,6 +31,9 @@
                 <button name="action_register_payment" type="object" string="Pay"
                         icon="fa-money"
                         invisible="state in ('paid', 'cancelled')"/>
+                <button name="action_bill_penalty" type="object" string="Bill Penalty"
+                        icon="fa-exclamation-triangle"
+                        invisible="penalty_amount &lt;= 0 or penalty_billed"/>
             </list>
         </field>
     </record>
@@ -47,6 +52,9 @@
                             invisible="state in ('paid', 'cancelled')"/>
                     <button name="action_open_invoice" type="object"
                             string="Open Invoice" invisible="not invoice_id"/>
+                    <button name="action_bill_penalty" type="object"
+                            string="Bill Penalty"
+                            invisible="penalty_amount &lt;= 0 or penalty_billed"/>
                     <button name="action_cancel" type="object"
                             string="Cancel" invisible="state == 'cancelled'"/>
                     <field name="state" widget="statusbar"/>
@@ -67,6 +75,11 @@
                             <field name="amount_residual" readonly="1"/>
                             <field name="days_overdue" readonly="1"
                                    invisible="days_overdue == 0"/>
+                            <field name="penalty_amount" readonly="1"
+                                   invisible="penalty_amount == 0"/>
+                            <field name="penalty_invoice_id" readonly="1"
+                                   invisible="not penalty_invoice_id"/>
+                            <field name="penalty_billed" invisible="1"/>
                             <field name="invoice_id" readonly="1"/>
                             <field name="invoice_state" readonly="1"/>
                             <field name="currency_id" invisible="1"/>

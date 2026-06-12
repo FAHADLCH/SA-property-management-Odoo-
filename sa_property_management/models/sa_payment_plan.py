@@ -53,11 +53,41 @@ class SaPaymentPlan(models.Model):
         string='Total %', digits=(8, 2), compute='_compute_total_percent', store=True)
     note = fields.Text()
 
+    # --- Late-payment penalty policy ---
+    penalty_type = fields.Selection(
+        [('none', 'No Penalty'),
+         ('flat', 'Flat Amount / Day'),
+         ('percent', '% of Overdue / Day'),
+         ('kibor', 'KIBOR + Spread (annual)')],
+        string='Penalty Method', default='none', required=True,
+        help="How late-payment penalties are charged on overdue installments.")
+    penalty_value = fields.Float(
+        string='Penalty Value', digits=(12, 4),
+        help="For 'Flat Amount / Day' this is the currency amount per day "
+             "late. For '% of Overdue / Day' this is the daily percentage "
+             "applied to the outstanding amount.")
+    penalty_kibor_tenor = fields.Selection(
+        [('1m', '1 Month'),
+         ('3m', '3 Months'),
+         ('6m', '6 Months'),
+         ('12m', '12 Months')],
+        string='KIBOR Tenor', default='6m',
+        help="KIBOR tenor used as the penalty base.")
+    penalty_kibor_spread = fields.Float(
+        string='KIBOR Spread (%)', digits=(6, 3),
+        help="Spread added to the applicable annual KIBOR rate.")
+    penalty_grace_days = fields.Integer(
+        string='Grace Days', default=0,
+        help="Number of days after the due date before a penalty starts "
+             "accruing.")
+
     _sql_constraints = [
         ('installment_count_positive', 'CHECK(installment_count > 0)',
          'Number of installments must be greater than zero.'),
         ('down_payment_range', 'CHECK(down_payment_percent >= 0 AND down_payment_percent <= 100)',
          'Down payment must be between 0 and 100%.'),
+        ('penalty_grace_days_positive', 'CHECK(penalty_grace_days >= 0)',
+         'Grace days cannot be negative.'),
     ]
 
     @api.depends('down_payment_percent', 'installment_count',
@@ -196,6 +226,34 @@ class SaPaymentPlan(models.Model):
                 schedule[-1]['amount'] += diff
 
         return schedule
+
+    def compute_penalty(self, residual, days_overdue, ref_date=None):
+        """Return the penalty amount for an overdue installment.
+
+        ``residual`` is the outstanding amount, ``days_overdue`` the number of
+        days past the due date. Grace days are subtracted before charging.
+        Pure helper — does not touch the database.
+        """
+        self.ensure_one()
+        if self.penalty_type == 'none' or residual <= 0 or days_overdue <= 0:
+            return 0.0
+        chargeable_days = max(days_overdue - (self.penalty_grace_days or 0), 0)
+        if chargeable_days <= 0:
+            return 0.0
+        if self.penalty_type == 'flat':
+            penalty = (self.penalty_value or 0.0) * chargeable_days
+        elif self.penalty_type == 'percent':
+            penalty = residual * (self.penalty_value or 0.0) / 100.0 \
+                * chargeable_days
+        elif self.penalty_type == 'kibor':
+            annual = self.env['sa.kibor.rate'].get_rate_for(
+                ref_date or fields.Date.context_today(self),
+                self.penalty_kibor_tenor or '6m')
+            annual += (self.penalty_kibor_spread or 0.0)
+            penalty = residual * annual / 100.0 / 365.0 * chargeable_days
+        else:
+            penalty = 0.0
+        return self.currency_id.round(penalty) if self.currency_id else round(penalty, 2)
 
 
 class SaPaymentPlanLine(models.Model):

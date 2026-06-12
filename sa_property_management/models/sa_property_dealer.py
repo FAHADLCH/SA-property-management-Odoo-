@@ -61,10 +61,12 @@ class SaPropertyDealer(models.Model):
             if vals.get('code', _('New')) == _('New'):
                 vals['code'] = self.env['ir.sequence'].next_by_code(
                     'sa.property.dealer') or _('New')
-            # Tag partner as dealer
+            # Tag partner as dealer and ensure it can be paid as a vendor
             if vals.get('partner_id'):
-                self.env['res.partner'].browse(
-                    vals['partner_id']).sa_is_property_dealer = True
+                partner = self.env['res.partner'].browse(vals['partner_id'])
+                partner.sa_is_property_dealer = True
+                if partner.supplier_rank < 1:
+                    partner.supplier_rank = 1
         return super().create(vals_list)
 
     @api.depends('booking_ids', 'booking_ids.state',

@@ -47,6 +47,11 @@ class SaPropertyBooking(models.Model):
     salesperson_id = fields.Many2one(
         'res.users', string='Salesperson',
         default=lambda self: self.env.user, tracking=True)
+    crm_lead_id = fields.Many2one(
+        'crm.lead', string='Source Opportunity', ondelete='set null',
+        index=True, copy=False, tracking=True,
+        help="The CRM lead/opportunity this booking originated from. "
+             "Confirming the booking marks the opportunity won.")
 
     booking_date = fields.Date(
         required=True, default=fields.Date.context_today, tracking=True)
@@ -67,9 +72,21 @@ class SaPropertyBooking(models.Model):
     invoice_ids = fields.One2many(
         'account.move', 'sa_booking_id', string='Invoices',
         domain=[('move_type', 'in', ('out_invoice', 'out_refund'))])
+    sale_order_id = fields.Many2one(
+        'sale.order', string='Sale Order', copy=False, readonly=True,
+        tracking=True,
+        help="Native sale order generated on confirmation. Drives the "
+             "standard Sales and Inventory (delivery) flow. Invoicing is "
+             "handled through the installment schedule.")
+    commission_ids = fields.One2many(
+        'sa.commission', 'booking_id', string='Commissions', copy=False)
+    document_ids = fields.One2many(
+        'sa.property.document', 'booking_id', string='Documents', copy=False)
 
     installment_count = fields.Integer(compute='_compute_aggregates', store=False)
     invoice_count = fields.Integer(compute='_compute_aggregates', store=False)
+    commission_count = fields.Integer(compute='_compute_aggregates', store=False)
+    document_count = fields.Integer(compute='_compute_aggregates', store=False)
     amount_invoiced = fields.Monetary(
         currency_field='currency_id', compute='_compute_aggregates', store=False)
     amount_paid = fields.Monetary(
@@ -134,7 +151,8 @@ class SaPropertyBooking(models.Model):
             if self.property_id.currency_id:
                 self.currency_id = self.property_id.currency_id
 
-    @api.depends('installment_ids', 'invoice_ids',
+    @api.depends('installment_ids', 'invoice_ids', 'commission_ids',
+                 'document_ids',
                  'invoice_ids.amount_total', 'invoice_ids.amount_residual',
                  'invoice_ids.state')
     def _compute_aggregates(self):
@@ -142,6 +160,8 @@ class SaPropertyBooking(models.Model):
             posted = rec.invoice_ids.filtered(lambda m: m.state == 'posted')
             rec.installment_count = len(rec.installment_ids)
             rec.invoice_count = len(rec.invoice_ids)
+            rec.commission_count = len(rec.commission_ids)
+            rec.document_count = len(rec.document_ids)
             rec.amount_invoiced = sum(posted.mapped('amount_total'))
             rec.amount_residual = sum(posted.mapped('amount_residual'))
             rec.amount_paid = rec.amount_invoiced - rec.amount_residual
@@ -186,7 +206,10 @@ class SaPropertyBooking(models.Model):
             rec.state = 'confirmed'
             rec.property_id.state = 'booked'
             rec.property_id.current_owner_id = rec.customer_id
+            rec._create_sale_order()
             rec._create_invoice_for_first_due()
+            rec._generate_commissions()
+            rec._update_crm_on_confirm()
             rec.state = 'in_payment'
 
     def action_cancel(self):
@@ -202,6 +225,8 @@ class SaPropertyBooking(models.Model):
                 ) % len(posted))
             rec.invoice_ids.filtered(lambda m: m.state == 'draft').unlink()
             rec.installment_ids.unlink()
+            if rec.sale_order_id and rec.sale_order_id.state != 'cancel':
+                rec.sale_order_id._action_cancel()
             if rec.property_id.state == 'booked':
                 rec.property_id.state = 'available'
                 rec.property_id.current_owner_id = False
@@ -212,6 +237,23 @@ class SaPropertyBooking(models.Model):
             if rec.state != 'cancelled':
                 raise UserError(_("Only cancelled bookings can reset to draft."))
             rec.state = 'draft'
+
+    def _cancel_for_surrender(self):
+        """Cancel a booking as part of a unit surrender.
+
+        Unlike :meth:`action_cancel`, this is allowed even when posted
+        invoices exist because the surrender wizard handles any refund
+        separately. Draft invoices and the installment schedule are removed
+        and the linked sale order is cancelled.
+        """
+        for rec in self:
+            if rec.state == 'cancelled':
+                continue
+            rec.invoice_ids.filtered(lambda m: m.state == 'draft').unlink()
+            rec.installment_ids.unlink()
+            if rec.sale_order_id and rec.sale_order_id.state != 'cancel':
+                rec.sale_order_id._action_cancel()
+            rec.state = 'cancelled'
 
     def action_mark_completed(self):
         for rec in self:
@@ -225,6 +267,7 @@ class SaPropertyBooking(models.Model):
                     "%s installment(s) are still unpaid.") % len(unpaid))
             rec.state = 'completed'
             rec.property_id.state = 'sold'
+            rec._validate_delivery()
 
     # ----- Helpers -----
 
@@ -243,6 +286,97 @@ class SaPropertyBooking(models.Model):
                     'amount': entry['amount'],
                     'line_type': entry['line_type'],
                 })
+
+    def _prepare_sale_order_vals(self):
+        self.ensure_one()
+        return {
+            'partner_id': self.customer_id.id,
+            'date_order': fields.Datetime.now(),
+            'origin': self.name,
+            'company_id': self.company_id.id,
+            'user_id': self.salesperson_id.id or self.env.user.id,
+            'payment_term_id': self.payment_term_id.id or False,
+            'sa_booking_id': self.id,
+        }
+
+    def _prepare_sale_order_line_vals(self, order):
+        self.ensure_one()
+        product = self.property_id.product_id
+        return {
+            'order_id': order.id,
+            'product_id': product.id,
+            'product_uom_qty': 1.0,
+            'price_unit': self.total_price,
+            'name': self.property_id.display_name or product.display_name,
+        }
+
+    def _create_sale_order(self):
+        """Create and confirm a native sale order for the booked unit.
+
+        The sale order drives the standard Sales/Inventory flow (order +
+        delivery). Customer invoicing remains driven by the installment
+        schedule, so the order itself is not invoiced from here.
+        """
+        self.ensure_one()
+        if self.sale_order_id:
+            return self.sale_order_id
+        if not self.property_id.product_id:
+            self.property_id._sync_product()
+        order = self.env['sale.order'].create(self._prepare_sale_order_vals())
+        self.env['sale.order.line'].create(
+            self._prepare_sale_order_line_vals(order))
+        order.action_confirm()
+        self.sale_order_id = order.id
+        return order
+
+    def _validate_delivery(self):
+        """Validate outgoing deliveries so inventory reflects the sold unit."""
+        self.ensure_one()
+        if not self.sale_order_id:
+            return
+        pickings = self.sale_order_id.picking_ids.filtered(
+            lambda p: p.state not in ('done', 'cancel'))
+        for picking in pickings:
+            for move in picking.move_ids:
+                move.quantity = move.product_uom_qty
+                move.picked = True
+            res = picking.button_validate()
+            if isinstance(res, dict) \
+                    and res.get('res_model') == 'stock.backorder.confirmation':
+                self.env['stock.backorder.confirmation'].with_context(
+                    res.get('context', {})).create({
+                        'pick_ids': [(6, 0, picking.ids)],
+                    }).process()
+
+    def _generate_commissions(self):
+        """Create dealer and investor commission lines on confirmation."""
+        Commission = self.env['sa.commission']
+        for rec in self:
+            # Dealer commission
+            if rec.dealer_id and rec.dealer_id.partner_id:
+                already = rec.commission_ids.filtered(
+                    lambda c: c.beneficiary_type == 'dealer'
+                    and c.state != 'cancelled')
+                if not already:
+                    Commission.create({
+                        'beneficiary_type': 'dealer',
+                        'partner_id': rec.dealer_id.partner_id.id,
+                        'dealer_id': rec.dealer_id.id,
+                        'booking_id': rec.id,
+                        'base_amount': rec.total_price,
+                        'commission_percent': rec.dealer_id.commission_percent,
+                        'currency_id': rec.currency_id.id,
+                        'company_id': rec.company_id.id,
+                    })
+            # Investor commission when the unit belongs to an active deal
+            deal = rec.property_id.deal_id
+            if deal and deal.state == 'active' and deal.investor_id:
+                already = rec.commission_ids.filtered(
+                    lambda c: c.beneficiary_type == 'investor'
+                    and c.state != 'cancelled')
+                if not already:
+                    Commission.create(
+                        deal._prepare_investor_commission_vals(rec))
 
     def _get_property_income_account(self):
         """Return the income account to use on generated invoices."""
@@ -305,6 +439,80 @@ class SaPropertyBooking(models.Model):
             'res_model': 'sa.property.installment',
             'view_mode': 'list,form',
             'domain': [('booking_id', '=', self.id)],
+        }
+
+    def action_view_sale_order(self):
+        self.ensure_one()
+        if not self.sale_order_id:
+            raise UserError(_("No sale order linked to this booking yet."))
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Sale Order'),
+            'res_model': 'sale.order',
+            'view_mode': 'form',
+            'res_id': self.sale_order_id.id,
+        }
+
+    def action_view_commissions(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Commissions'),
+            'res_model': 'sa.commission',
+            'view_mode': 'list,form',
+            'domain': [('booking_id', '=', self.id)],
+            'context': {
+                'default_booking_id': self.id,
+                'default_base_amount': self.total_price,
+            },
+        }
+
+    def action_view_documents(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Documents'),
+            'res_model': 'sa.property.document',
+            'view_mode': 'list,form',
+            'domain': [('booking_id', '=', self.id)],
+            'context': {
+                'default_booking_id': self.id,
+                'default_property_id': self.property_id.id,
+                'default_partner_id': self.customer_id.id,
+            },
+        }
+
+    def _update_crm_on_confirm(self):
+        """Mark the originating opportunity won and set its revenue.
+
+        Bookings created straight from a lead carry ``crm_lead_id``. On
+        confirmation the pipeline should reflect the closed sale: a lead is
+        promoted to an opportunity and any open opportunity is won.
+        """
+        self.ensure_one()
+        lead = self.crm_lead_id
+        if not lead:
+            return
+        if not lead.partner_id and self.customer_id:
+            lead.partner_id = self.customer_id
+        lead.expected_revenue = self.total_price
+        if lead.type == 'lead':
+            lead.convert_opportunity(self.customer_id or self.env['res.partner'])
+        if lead.probability < 100 and lead.active:
+            lead.action_set_won()
+        lead.message_post(body=_(
+            "Won via booking %s.") % self.name)
+
+    def action_view_crm_lead(self):
+        self.ensure_one()
+        if not self.crm_lead_id:
+            raise UserError(_("No source opportunity linked to this booking."))
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Source Opportunity'),
+            'res_model': 'crm.lead',
+            'view_mode': 'form',
+            'res_id': self.crm_lead_id.id,
         }
 
     def action_print_payment_schedule(self):

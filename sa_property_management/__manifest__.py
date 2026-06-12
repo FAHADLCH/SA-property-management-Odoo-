@@ -49,9 +49,10 @@ Verified on **Odoo 18.0 and 19.0** (Community).
     'support': "info@sasystems.solutions",
     'license': 'LGPL-3',
     'category': 'Services/Real Estate',
-    # Free app: no price/currency keys so the Odoo Apps store lists it as free.
-    # Series-prefixed version (this is the Odoo 19.0 branch).
-    'version': '19.0.1.0.0',
+    # Series-pinned to Odoo 19. The IDENTICAL codebase runs on Odoo 18 from the
+    # 18.0 branch (version 18.0.2.0.0); only this version line differs per series
+    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
+    'version': '19.0.2.0.0',
     'application': True,
     'installable': True,
     'auto_install': False,
@@ -64,6 +65,11 @@ Verified on **Odoo 18.0 and 19.0** (Community).
         'product',
         'portal',
         'crm',
+        'sale_management',
+        'stock',
+        'purchase',
+        'project',
+        'hr_timesheet',
     ],
 
     'data': [
@@ -72,14 +78,18 @@ Verified on **Odoo 18.0 and 19.0** (Community).
         'security/ir.model.access.csv',
         # data
         'data/ir_sequence_data.xml',
+        'data/product_category_data.xml',
         'data/property_area_uom_data.xml',
         'data/transfer_tax_data.xml',
         'data/misc_charge_data.xml',
         'data/service_data.xml',
+        'data/kibor_rate_data.xml',
         # wizards
         'wizards/sa_booking_confirm_wizard_views.xml',
         'wizards/sa_installment_payment_wizard_views.xml',
         'wizards/sa_property_transfer_wizard_views.xml',
+        'wizards/sa_property_buyback_wizard_views.xml',
+        'wizards/sa_property_surrender_wizard_views.xml',
         'wizards/sa_lead_import_wizard_views.xml',
         # reports
         'reports/report_paperformat.xml',
@@ -90,6 +100,7 @@ Verified on **Odoo 18.0 and 19.0** (Community).
         # views
         'views/sa_transfer_tax_views.xml',
         'views/sa_misc_charge_views.xml',
+        'views/sa_kibor_rate_views.xml',
         'views/res_partner_views.xml',
         'views/sa_payment_plan_views.xml',
         'views/sa_property_project_views.xml',
@@ -97,7 +108,10 @@ Verified on **Odoo 18.0 and 19.0** (Community).
         'views/sa_property_dealer_views.xml',
         'views/sa_property_installment_views.xml',
         'views/sa_property_booking_views.xml',
+        'views/sa_commission_views.xml',
+        'views/sa_property_deal_views.xml',
         'views/sa_property_transfer_views.xml',
+        'views/sa_property_document_views.xml',
         'views/sa_property_service_views.xml',
         'views/sa_dealer_allocation_views.xml',
         'views/sa_lead_source_views.xml',
@@ -105,6 +119,11 @@ Verified on **Odoo 18.0 and 19.0** (Community).
         'views/sa_verify_templates.xml',
         'views/res_config_settings_views.xml',
         'views/sa_property_dashboard_views.xml',
+        'views/sa_construction_project_views.xml',
+        'views/sa_construction_contract_views.xml',
+        'views/sa_construction_ipc_views.xml',
+        'views/sa_construction_requisition_views.xml',
+        'views/sa_construction_material_issue_views.xml',
         'views/menus.xml',
     ],
 

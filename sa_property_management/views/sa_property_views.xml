@@ -74,6 +74,15 @@
                             invisible="state in ('available', 'booked', 'sold', 'transferred')"/>
                     <button name="action_block" type="object"
                             string="Block" invisible="state in ('blocked', 'booked', 'sold', 'transferred')"/>
+                    <button name="action_unblock" type="object"
+                            string="Unblock" class="btn-primary"
+                            invisible="state != 'blocked'"/>
+                    <button name="action_open_buyback_wizard" type="object"
+                            string="Buy Back"
+                            invisible="state not in ('sold', 'transferred')"/>
+                    <button name="action_open_surrender_wizard" type="object"
+                            string="Surrender"
+                            invisible="state != 'booked'"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,available,booked,sold,transferred"/>
                 </header>
@@ -88,6 +97,22 @@
                         <button name="action_view_transfers" type="object"
                                 class="oe_stat_button" icon="fa-exchange">
                             <field name="transfer_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                        <button name="action_view_documents" type="object"
+                                class="oe_stat_button" icon="fa-folder-open-o">
+                            <field name="document_count" widget="statinfo" string="Documents"/>
+                        </button>
+                        <button name="action_view_product" type="object"
+                                class="oe_stat_button" icon="fa-cube"
+                                invisible="not product_tmpl_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Product</span>
+                            </div>
+                        </button>
+                        <button name="action_view_stock" type="object"
+                                class="oe_stat_button" icon="fa-cubes"
+                                invisible="not product_id">
+                            <field name="qty_on_hand" widget="statinfo" string="On Hand"/>
                         </button>
                     </div>
                     <field name="image" widget="image" class="oe_avatar"/>
@@ -128,6 +153,10 @@
                         </group>
                         <group string="Ownership">
                             <field name="current_owner_id"/>
+                            <field name="deal_id" readonly="1"
+                                   options="{'no_create': True}"/>
+                            <field name="product_tmpl_id" readonly="1"/>
+                            <field name="product_id" invisible="1"/>
                             <field name="active" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>

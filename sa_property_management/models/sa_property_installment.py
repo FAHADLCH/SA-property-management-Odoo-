@@ -59,6 +59,17 @@ class SaPropertyInstallment(models.Model):
         compute='_compute_state', store=True)
     days_overdue = fields.Integer(compute='_compute_state', store=True)
 
+    penalty_amount = fields.Monetary(
+        currency_field='currency_id', compute='_compute_penalty', store=True,
+        help="Accrued late-payment penalty based on the booking's payment "
+             "plan policy and the number of days overdue.")
+    penalty_invoice_id = fields.Many2one(
+        'account.move', string='Penalty Invoice', copy=False,
+        ondelete='set null',
+        help="Separate customer invoice raised for the accrued penalty.")
+    penalty_billed = fields.Boolean(
+        compute='_compute_penalty_billed', store=True)
+
     @api.depends('name', 'booking_id.name')
     def _compute_display_name(self):
         for rec in self:
@@ -133,7 +144,93 @@ class SaPropertyInstallment(models.Model):
                 else:
                     rec.state = 'invoiced'
 
+    @api.depends('state', 'days_overdue', 'amount_residual',
+                 'booking_id.payment_plan_id.penalty_type',
+                 'booking_id.payment_plan_id.penalty_value',
+                 'booking_id.payment_plan_id.penalty_grace_days',
+                 'booking_id.payment_plan_id.penalty_kibor_spread',
+                 'booking_id.payment_plan_id.penalty_kibor_tenor')
+    def _compute_penalty(self):
+        today = fields.Date.context_today(self)
+        for rec in self:
+            plan = rec.booking_id.payment_plan_id
+            if rec.state != 'overdue' or not plan \
+                    or plan.penalty_type == 'none':
+                rec.penalty_amount = 0.0
+                continue
+            rec.penalty_amount = plan.compute_penalty(
+                rec.amount_residual, rec.days_overdue, ref_date=today)
+
+    @api.depends('penalty_invoice_id', 'penalty_invoice_id.state')
+    def _compute_penalty_billed(self):
+        for rec in self:
+            rec.penalty_billed = bool(
+                rec.penalty_invoice_id
+                and rec.penalty_invoice_id.state != 'cancel')
+
     # ----- Actions -----
+
+    def action_bill_penalty(self):
+        """Raise (or open) a customer invoice for the accrued penalty."""
+        self.ensure_one()
+        if self.penalty_invoice_id and self.penalty_invoice_id.state != 'cancel':
+            return self._open_penalty_invoice()
+        if self.penalty_amount <= 0:
+            raise UserError(_("There is no accrued penalty to bill."))
+        booking = self.booking_id
+        journal = booking._get_sale_journal()
+        if not journal:
+            raise UserError(_(
+                "No sales journal available for company %s.")
+                % booking.company_id.name)
+        account = self._get_penalty_income_account()
+        if not account:
+            raise UserError(_(
+                "No income account available for the penalty. Configure a "
+                "penalty income account in Property Management → Settings."))
+        move = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': booking.customer_id.id,
+            'invoice_date': fields.Date.context_today(self),
+            'journal_id': journal.id,
+            'currency_id': self.currency_id.id,
+            'company_id': booking.company_id.id,
+            'sa_booking_id': booking.id,
+            'sa_installment_id': self.id,
+            'invoice_line_ids': [(0, 0, {
+                'name': _('Late penalty - %s [%s]',
+                          self.name, booking.name),
+                'quantity': 1.0,
+                'price_unit': self.penalty_amount,
+                'account_id': account.id,
+                'tax_ids': [(5, 0, 0)],
+            })],
+        })
+        self.penalty_invoice_id = move.id
+        return self._open_penalty_invoice()
+
+    def _open_penalty_invoice(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Penalty Invoice'),
+            'res_model': 'account.move',
+            'res_id': self.penalty_invoice_id.id,
+            'view_mode': 'form',
+        }
+
+    def _get_penalty_income_account(self):
+        self.ensure_one()
+        ICP = self.env['ir.config_parameter'].sudo()
+        account_id = ICP.get_param(
+            'sa_property_management.penalty_income_account_id')
+        if account_id:
+            account = self.env['account.account'].browse(
+                int(account_id)).exists()
+            if account:
+                return account
+        # Fall back to the booking's configured property income account
+        return self.booking_id._get_property_income_account()
 
     def action_generate_invoice(self):
         """Create a customer invoice for this installment."""
@@ -214,8 +311,11 @@ class SaPropertyInstallment(models.Model):
 
     @api.model
     def _cron_update_overdue(self):
-        """Daily cron to refresh the computed state for overdue tracking."""
-        self.search([('state', 'in', ('pending', 'invoiced', 'partial', 'overdue'))])._compute_state()
+        """Daily cron to refresh overdue state and accrued penalties."""
+        records = self.search([
+            ('state', 'in', ('pending', 'invoiced', 'partial', 'overdue'))])
+        records._compute_state()
+        records._compute_penalty()
 
 
 class AccountMove(models.Model):
