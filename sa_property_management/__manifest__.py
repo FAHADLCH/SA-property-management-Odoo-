@@ -1,47 +1,69 @@
 # -*- coding: utf-8 -*-
 {
     'name': "SA Property Management",
-    'summary': "End-to-end real estate property management for any country: "
-               "listings, payment plans, receivables, dealerships and property transfers "
-               "with a country-aware tax engine and configurable miscellaneous charges.",
+    'summary': "End-to-end real estate AND construction management for any "
+               "country: listings, payment plans, receivables, dealerships, "
+               "investor deals, property transfers and a full construction "
+               "suite (projects, subcontracts/BOQ, IPCs, procurement) with a "
+               "country-aware tax engine.",
     'description': """
 SA Property Management
 ======================
 
-A complete, **country-agnostic** property / real-estate management solution.
-Works out of the box for any market — pick your operating country in the
-settings and the matching transfer taxes and charges are applied automatically.
+A complete, **country-agnostic** real-estate **and construction** management
+solution. Works out of the box for any market — pick your operating country in
+the settings and the matching transfer taxes and charges are applied
+automatically. Runs on **Odoo 18.0 and 19.0** from a single codebase.
 
-Key Features
-------------
+Real-Estate Features
+--------------------
 * **Property Listing** with flexible Units of Measure (Sq.Ft, Sq.Meter,
   Sq.Yard, plus regional units such as Marla and Kanal).
 * **Project / Housing Society** management with blocks, streets and plot numbers.
 * **Payment Plan Builder** (Down Payment + Monthly/Quarterly/Half-Yearly/Yearly
-  installments + Balloon Payments + On-Possession charge).
+  installments + Balloon Payments + On-Possession charge), with optional
+  **KIBOR / benchmark-linked variable rates**.
 * **Booking Workflow** that auto-generates the installment schedule and
   customer invoices through standard Odoo Accounting.
 * **Receivables Management** with installment aging, overdue tracking and
   registered payment integration.
-* **Property Dealership Management** with commission calculation per booking.
-* **Country-Aware Tax Engine** — define transfer taxes (transfer/stamp duty,
-  registration, capital gains, VAT/GST, withholding, etc.) and miscellaneous
-  charges per country, then select the relevant country in Configuration.
-  Ready-made presets ship for several markets and you can add your own.
-* **Backend Configuration** for default tax accounts, journals, currency,
-  operating country and area unit-of-measure - everything is data-driven,
-  with no hard-coded country logic.
+* **Investor Deals** for secondary-market / investor resale tracking.
+* **Dealership Management** with per-booking **commission** calculation.
+* **Property Transfers** with a country-aware tax breakdown and transfer deed.
+* **Buyback & Surrender** wizards for cancellations and repurchases.
+* **Document Management** for property paperwork, plus QR-code verification.
+* **Live Dashboard** for bookings, receivables and payment-plan status.
+
+Construction Management
+-----------------------
+A full contractor / developer construction suite:
+
+* **Construction Projects** broken down into **Phases** with progress tracking.
+* **Subcontracts** with a detailed **Bill of Quantities (BOQ)**.
+* **Interim Payment Certificates (IPC)** that certify executed quantities and
+  bill against the contract.
+* **Material Requisitions** that raise **Purchase RFQs** automatically.
+* **Material Issues** to site with native **Inventory** stock moves.
+* **Project Cost Model** built on Odoo **Analytic Accounting** and Timesheets.
+
+Country-Aware Tax Engine
+------------------------
+Define transfer taxes (transfer/stamp duty, registration, capital gains,
+VAT/GST, withholding, etc.) and miscellaneous charges per country, then select
+the relevant country in Configuration. Ready-made presets ship for several
+markets and you can add your own — no hard-coded country logic.
 
 Built On
 --------
-Leverages Odoo core: ``account``, ``product``, ``mail``, ``portal`` and
-``crm`` for invoicing, communications, customer self-service and lead-source
-integration. No external Python dependencies — deploys on Odoo.sh and
-on-premise (Community or Enterprise).
+Leverages Odoo core: ``account``, ``product``, ``sale_management``, ``stock``,
+``purchase``, ``project``, ``hr_timesheet``, ``mail``, ``portal`` and ``crm``.
+No external Python dependencies — deploys on Odoo.sh and on-premise (Community
+or Enterprise).
 
 Compatibility
 -------------
-Verified on **Odoo 18.0 and 19.0** (Community).
+Verified on **Odoo 18.0 and 19.0** (Community) — 49 automated tests pass on
+both series.
     """,
     'author': "SA Systems",
     'maintainer': "SA Systems",
