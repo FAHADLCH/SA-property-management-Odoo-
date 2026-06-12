@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <radialGradient id="bbg" cx="82%" cy="-6%" r="120%">
+      <stop offset="0%" stop-color="#5a1418"/>
+      <stop offset="34%" stop-color="#23090c"/>
+      <stop offset="74%" stop-color="#0d0d0f"/>
+      <stop offset="100%" stop-color="#080809"/>
+    </radialGradient>
+    <linearGradient id="bred" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff4a3c"/>
+      <stop offset="100%" stop-color="#ad1e22"/>
+    </linearGradient>
+    <linearGradient id="btower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a1d22"/>
+      <stop offset="100%" stop-color="#160d10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bbg)"/>
+  <g stroke="#ff3c3c" stroke-width="1" opacity="0.05">
+    <line x1="0" y1="150" x2="1200" y2="150"/><line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="450" x2="1200" y2="450"/>
+  </g>
+
+  <!-- brand -->
+  <g transform="translate(72,64)">
+    <polygon points="22,0 42,11 42,33 22,44 2,33 2,11" fill="url(#bred)"/>
+    <polygon points="22,9 34,16 34,28 22,35 10,28 10,16" fill="#0d0d0f"/>
+    <polygon points="22,14 29,18 29,26 22,30 15,26 15,18" fill="#ff6b60"/>
+    <text x="58" y="19" fill="#ffffff" font-size="22" font-weight="bold" letter-spacing="0.6">SA Systems</text>
+    <text x="58" y="38" fill="#d4a5a9" font-size="12" letter-spacing="2.6">PROPERTY + CONSTRUCTION INTELLIGENCE</text>
+  </g>
+
+  <!-- badge -->
+  <g transform="translate(72,150)">
+    <rect x="0" y="0" width="430" height="36" rx="18" fill="url(#bred)"/>
+    <text x="22" y="24" fill="#ffffff" font-size="14" font-weight="bold" letter-spacing="2.4">REAL ESTATE + CONSTRUCTION ERP &#183; GLOBAL READY</text>
+  </g>
+
+  <!-- headline -->
+  <g transform="translate(70,232)">
+    <text x="0" y="48" font-size="74" font-weight="bold" letter-spacing="-2">
+      <tspan fill="#ffffff">SA </tspan><tspan fill="#ff3c3c">Property</tspan>
+    </text>
+    <text x="0" y="126" font-size="74" font-weight="bold" letter-spacing="-2" fill="#ffffff">Management</text>
+    <text x="2" y="178" font-size="22" fill="#d4d4d8">Sell plots and deliver projects in <tspan fill="#ff7a6b" font-weight="bold">one</tspan> Odoo app —</text>
+    <text x="2" y="210" font-size="22" fill="#d4d4d8">payment plans, country-aware taxes, subcontracts, IPCs &amp; procurement.</text>
+  </g>
+
+  <!-- feature chips -->
+  <g transform="translate(72,486)" font-size="14.5" font-weight="bold" fill="#ffd9d4">
+    <rect x="0"   y="0" width="168" height="40" rx="20" fill="none" stroke="#5a2a2e" stroke-width="1.4"/><text x="22"  y="26">Payment Plans</text>
+    <rect x="184" y="0" width="206" height="40" rx="20" fill="none" stroke="#5a2a2e" stroke-width="1.4"/><text x="206" y="26">Country-Aware Tax</text>
+    <rect x="406" y="0" width="216" height="40" rx="20" fill="none" stroke="#5a2a2e" stroke-width="1.4"/><text x="428" y="26">Subcontracts &amp; IPCs</text>
+    <rect x="638" y="0" width="168" height="40" rx="20" fill="none" stroke="#5a2a2e" stroke-width="1.4"/><text x="660" y="26">Procurement</text>
+    <rect x="822" y="0" width="196" height="40" rx="20" fill="none" stroke="#5a2a2e" stroke-width="1.4"/><text x="844" y="26">Transfers &amp; QR</text>
+  </g>
+
+  <!-- ===== skyline + crane (right) ===== -->
+  <g transform="translate(840,150)">
+    <line x1="-20" y1="300" x2="320" y2="300" stroke="#5a2a2e" stroke-width="2.5"/>
+
+    <rect x="20" y="84" width="108" height="216" fill="url(#btower)" stroke="#6e3035" stroke-width="2"/>
+    <g fill="#ff6b60" opacity="0.85">
+      <rect x="36" y="104" width="16" height="16"/><rect x="62" y="104" width="16" height="16"/><rect x="88" y="104" width="16" height="16"/>
+      <rect x="36" y="134" width="16" height="16"/><rect x="62" y="134" width="16" height="16"/><rect x="88" y="134" width="16" height="16"/>
+      <rect x="36" y="164" width="16" height="16"/><rect x="62" y="164" width="16" height="16"/><rect x="88" y="164" width="16" height="16"/>
+      <rect x="36" y="194" width="16" height="16"/><rect x="62" y="194" width="16" height="16"/><rect x="88" y="194" width="16" height="16"/>
+      <rect x="36" y="224" width="16" height="16"/><rect x="62" y="224" width="16" height="16"/><rect x="88" y="224" width="16" height="16"/>
+      <rect x="36" y="254" width="16" height="16"/><rect x="62" y="254" width="16" height="16"/><rect x="88" y="254" width="16" height="16"/>
+    </g>
+
+    <rect x="146" y="150" width="78" height="150" fill="url(#btower)" stroke="#6e3035" stroke-width="2"/>
+    <g fill="#ffae9f" opacity="0.8">
+      <rect x="160" y="166" width="14" height="14"/><rect x="184" y="166" width="14" height="14"/><rect x="206" y="166" width="14" height="14"/>
+      <rect x="160" y="192" width="14" height="14"/><rect x="184" y="192" width="14" height="14"/><rect x="206" y="192" width="14" height="14"/>
+      <rect x="160" y="218" width="14" height="14"/><rect x="184" y="218" width="14" height="14"/><rect x="206" y="218" width="14" height="14"/>
+      <rect x="160" y="244" width="14" height="14"/><rect x="184" y="244" width="14" height="14"/><rect x="206" y="244" width="14" height="14"/>
+    </g>
+
+    <rect x="242" y="196" width="74" height="104" fill="none" stroke="#8a4147" stroke-width="2.5"/>
+    <line x1="242" y1="230" x2="316" y2="230" stroke="#8a4147" stroke-width="2"/>
+    <line x1="242" y1="264" x2="316" y2="264" stroke="#8a4147" stroke-width="2"/>
+    <line x1="279" y1="196" x2="279" y2="300" stroke="#8a4147" stroke-width="2"/>
+
+    <g stroke="#ff3c3c" stroke-width="4" fill="none" stroke-linecap="round">
+      <line x1="300" y1="300" x2="300" y2="64"/>
+      <line x1="300" y1="64" x2="170" y2="64"/>
+      <line x1="300" y1="64" x2="332" y2="64"/>
+      <line x1="300" y1="64" x2="196" y2="96"/>
+      <line x1="300" y1="64" x2="322" y2="96"/>
+    </g>
+    <line x1="210" y1="64" x2="210" y2="128" stroke="#ff7a6b" stroke-width="3"/>
+    <rect x="196" y="128" width="28" height="20" fill="url(#bred)"/>
+    <circle cx="300" cy="64" r="7" fill="#ffffff"/>
+  </g>
+
+  <!-- footer strip -->
+  <text x="600" y="576" fill="#8a8a92" font-size="13" text-anchor="middle" letter-spacing="0.5">Odoo 18 &amp; 19  &#183;  LGPL-3  &#183;  49 automated tests  &#183;  info@sasystems.solutions</text>
+</svg>
