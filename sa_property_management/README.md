@@ -1,16 +1,35 @@
 # SA Property Management by SA Systems (Odoo 18 / 19)
 
-End-to-end real estate management module for any country, with a country-aware tax engine.
+End-to-end real estate **and construction** management module for any country,
+with a country-aware tax engine.
 
 ## Features
 
+### Real Estate
+
 - **Project & Property Listing** — Housing societies, blocks, plots, apartments, commercial units.
 - **Flexible Area Units** — Sq.Ft, Sq.Meter, Sq.Yard plus regional units (Marla, Kanal) pre-configured.
-- **Payment Plans** — Down payment + N installments (monthly/quarterly/etc.) + balloon payments + on-possession charge.
+- **Payment Plans** — Down payment + N installments (monthly/quarterly/etc.) + balloon payments + on-possession charge, with optional **KIBOR / benchmark-linked variable rates**.
 - **Bookings** — One-click booking confirmation auto-generates installment schedule and customer invoices.
 - **Receivables Management** — Installment aging, overdue tracking, integrated with Odoo Accounting.
+- **Investor Deals** — Secondary-market / investor resale tracking.
 - **Dealership Management** — Dealers/agents with auto-computed commissions per booking.
 - **Property Transfer System** — Owner-change workflow with a country-aware tax engine (transfer/stamp duty, registration, capital gains, VAT/GST, withholding) and configurable misc charges.
+- **Buyback & Surrender** — Wizards for cancellations and repurchases.
+- **Document Management** — Property paperwork plus QR-code verification.
+- **Live Dashboard** — Bookings, receivables and payment-plan status.
+
+### Construction
+
+- **Construction Projects** — Broken down into phases with progress tracking.
+- **Subcontracts** — Detailed Bill of Quantities (BOQ).
+- **Interim Payment Certificates (IPC)** — Certify executed quantities and bill against the contract.
+- **Material Requisitions** — Raise Purchase RFQs automatically.
+- **Material Issues** — Issue to site with native Inventory stock moves.
+- **Project Cost Model** — Built on Odoo Analytic Accounting and Timesheets.
+
+### Platform
+
 - **Fully Configurable Backend** — Operating country, every tax, charge, journal, account and default UoM is data-driven via Settings.
 - **Reports** — Booking confirmation, payment schedule, transfer deed.
 
@@ -18,7 +37,7 @@ End-to-end real estate management module for any country, with a country-aware t
 
 - Odoo **18.0** and **19.0** (Community & Enterprise)
 - License: **LGPL-3** (free / open source)
-- Dependencies: `base`, `mail`, `account`, `product`, `portal`, `crm`
+- Dependencies: `base`, `mail`, `account`, `product`, `sale_management`, `stock`, `purchase`, `project`, `hr_timesheet`, `portal`, `crm`
 
 > The module uses modern Odoo view syntax (`<list>`, `<chatter/>`,
 > `<app>/<block>/<setting>` settings, `@api.model_create_multi`), which
@@ -72,6 +91,6 @@ End-to-end real estate management module for any country, with a country-aware t
 This module follows the official Odoo Apps guidelines:
 - Valid manifest with all required keys (`name`, `version`, `license`, `category`, `summary`).
 - LGPL-3 (free / open source) license file included.
-- `static/description/index.html` description page with screenshots placeholder.
+- `static/description/index.html` description page (self-contained, inline-styled).
 - No external Python deps; only uses Odoo core modules.
-- Semantic version starts with the target Odoo major (`18.0.1.0.0`).
+- Semantic version starts with the target Odoo major (`18.0.2.0.0` / `19.0.2.0.0`).
