@@ -7,9 +7,16 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="action_sa_create_booking" type="object"
+                <button name="action_sa_view_bookings" type="object"
                         class="oe_stat_button" icon="fa-home"
-                        string="Create Booking"/>
+                        invisible="sa_booking_count == 0">
+                    <field name="sa_booking_count" widget="statinfo"
+                           string="Bookings"/>
+                </button>
+                <button name="action_sa_create_booking" type="object"
+                        class="oe_stat_button" icon="fa-plus-square-o"
+                        string="Create Booking"
+                        invisible="sa_booking_count != 0"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Real Estate" name="sa_real_estate">
