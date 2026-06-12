@@ -12,18 +12,18 @@ class ResPartner(models.Model):
     sa_cnic = fields.Char(string='National ID',
                           help="Government-issued national identity number "
                                "(e.g. CNIC, SSN, Aadhaar, Emirates ID).")
-    sa_ntn = fields.Char(string='Tax ID',
+    sa_ntn = fields.Char(string='Tax Number',
                          help="Taxpayer identification number (e.g. NTN, TIN, VAT).")
     sa_passport_no = fields.Char(string='Passport No.')
     sa_father_husband_name = fields.Char(
         string='Father / Husband Name',
         help="Guardian name as printed on the national ID, where applicable.")
-    sa_dob = fields.Date(string='Date of Birth')
+    sa_dob = fields.Date(string='Birth Date')
     sa_gender = fields.Selection(
         [('male', 'Male'),
          ('female', 'Female'),
          ('other', 'Other')],
-        string='Gender')
+        string='Sex')
     sa_nationality = fields.Char(string='Nationality')
     sa_occupation = fields.Char(string='Occupation')
 
