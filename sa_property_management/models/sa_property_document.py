@@ -78,6 +78,7 @@ class SaPropertyDocument(models.Model):
         'ir.attachment', 'sa_property_document_ir_attachment_rel',
         'document_id', 'attachment_id', string='Files')
     attachment_count = fields.Integer(
+        string='File Count',
         compute='_compute_attachment_count', store=False)
     note = fields.Html(string='Notes')
     active = fields.Boolean(default=True)
