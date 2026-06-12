@@ -196,7 +196,7 @@
                 <filter name="in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
                 <filter name="planning" string="Planning" domain="[('state', '=', 'planning')]"/>
                 <filter name="done" string="Completed" domain="[('state', '=', 'done')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
                     <filter name="group_property_project" string="Property Project"
                             context="{'group_by': 'property_project_id'}"/>

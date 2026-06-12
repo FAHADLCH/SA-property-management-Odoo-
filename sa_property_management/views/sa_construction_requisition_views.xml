@@ -107,7 +107,7 @@
                 <field name="vendor_id"/>
                 <filter name="to_approve" string="To Approve" domain="[('state', '=', 'draft')]"/>
                 <filter name="approved" string="Approved" domain="[('state', '=', 'approved')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_construction" string="Construction Project"
                             context="{'group_by': 'construction_id'}"/>
                     <filter name="group_state" string="Status"

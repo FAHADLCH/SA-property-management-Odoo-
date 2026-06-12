@@ -45,7 +45,7 @@
                 <field name="effective_date"/>
                 <field name="tenor"/>
                 <filter name="active" string="Active" domain="[('active', '=', True)]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_tenor" string="Tenor"
                             context="{'group_by': 'tenor'}"/>
                 </group>

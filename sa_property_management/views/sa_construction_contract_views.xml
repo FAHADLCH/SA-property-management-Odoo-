@@ -126,7 +126,7 @@
                 <field name="contractor_id"/>
                 <filter name="open" string="Open"
                         domain="[('state', 'in', ('confirmed', 'in_progress'))]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_construction" string="Construction Project"
                             context="{'group_by': 'construction_id'}"/>
                     <filter name="group_contractor" string="Subcontractor"

@@ -79,20 +79,29 @@ class SaConstructionMaterialIssue(models.Model):
             raise UserError(_(
                 "No internal transfer operation type is configured in the "
                 "warehouse."))
+        # v19 dropped stock.move.name in favour of description_picking.
+        move_fields = self.env['stock.move']._fields
+        desc_field = 'name' if 'name' in move_fields else 'description_picking'
+        move_cmds = []
+        for line in self.line_ids:
+            if not line.product_id:
+                continue
+            move_vals = {
+                'product_id': line.product_id.id,
+                'product_uom_qty': line.quantity,
+                'product_uom': line.uom_id.id or line.product_id.uom_id.id,
+                'location_id': source.id,
+                'location_dest_id': dest.id,
+            }
+            move_vals[desc_field] = line.product_id.display_name
+            move_cmds.append((0, 0, move_vals))
         picking = self.env['stock.picking'].create({
             'picking_type_id': picking_type.id,
             'location_id': source.id,
             'location_dest_id': dest.id,
             'origin': self.name,
             'company_id': self.company_id.id,
-            'move_ids': [(0, 0, {
-                'name': line.product_id.display_name,
-                'product_id': line.product_id.id,
-                'product_uom_qty': line.quantity,
-                'product_uom': line.uom_id.id or line.product_id.uom_id.id,
-                'location_id': source.id,
-                'location_dest_id': dest.id,
-            }) for line in self.line_ids if line.product_id],
+            'move_ids': move_cmds,
         })
         picking.action_confirm()
         picking.action_assign()

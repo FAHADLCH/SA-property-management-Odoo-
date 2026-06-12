@@ -113,7 +113,7 @@
                 <separator/>
                 <filter name="my_docs" string="My Documents"
                         domain="[('responsible_id', '=', uid)]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_type" string="Document Type"
                             context="{'group_by': 'document_type'}"/>
                     <filter name="group_state" string="Status"

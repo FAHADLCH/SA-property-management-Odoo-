@@ -114,7 +114,7 @@
                 <field name="contractor_id"/>
                 <filter name="to_approve" string="To Approve" domain="[('state', '=', 'draft')]"/>
                 <filter name="to_bill" string="To Bill" domain="[('state', '=', 'approved')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_construction" string="Construction Project"
                             context="{'group_by': 'construction_id'}"/>
                     <filter name="group_contract" string="Subcontract"

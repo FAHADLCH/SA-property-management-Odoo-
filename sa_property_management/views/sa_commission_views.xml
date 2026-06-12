@@ -113,7 +113,7 @@
                 <separator/>
                 <filter name="dealers" string="Dealers" domain="[('beneficiary_type', '=', 'dealer')]"/>
                 <filter name="investors" string="Investors" domain="[('beneficiary_type', '=', 'investor')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_beneficiary" string="Beneficiary"
                             context="{'group_by': 'partner_id'}"/>
                     <filter name="group_type" string="Type"

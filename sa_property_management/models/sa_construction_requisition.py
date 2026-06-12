@@ -91,16 +91,22 @@ class SaConstructionRequisition(models.Model):
         if not self.line_ids:
             raise UserError(_("There is nothing to purchase."))
 
+        # v19 renamed purchase.order.line.product_uom -> product_uom_id.
+        pol_fields = self.env['purchase.order.line']._fields
+        uom_field = 'product_uom_id' if 'product_uom_id' in pol_fields \
+            else 'product_uom'
         order_lines = []
         for line in self.line_ids:
-            order_lines.append((0, 0, {
+            line_vals = {
                 'product_id': line.product_id.id,
                 'name': line.name or line.product_id.display_name,
                 'product_qty': line.quantity,
-                'product_uom': line.uom_id.id or line.product_id.uom_po_id.id,
                 'price_unit': line.product_id.standard_price,
                 'date_planned': fields.Datetime.now(),
-            }))
+            }
+            line_vals[uom_field] = (
+                line.uom_id.id or line.product_id.uom_po_id.id)
+            order_lines.append((0, 0, line_vals))
         # Note: procurement does not carry the construction analytic account.
         # Buying material only replenishes stock; the project cost is booked
         # later when the material is issued to the site.

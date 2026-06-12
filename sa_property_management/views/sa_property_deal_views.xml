@@ -114,7 +114,7 @@
                 <filter name="active" string="Active" domain="[('state', '=', 'active')]"/>
                 <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
                 <filter name="closed" string="Closed" domain="[('state', '=', 'closed')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_investor" string="Investor"
                             context="{'group_by': 'investor_id'}"/>
                     <filter name="group_state" string="Status"

@@ -229,13 +229,20 @@ class TestAccessRoles(TransactionCase):
             'name': 'ACL Plan', 'down_payment_percent': 10.0,
             'installment_count': 4, 'frequency': 'monthly'})
         cls.customer = cls.env['res.partner'].create({'name': 'ACL Buyer'})
+        # v19 renamed res.users.groups_id -> group_ids.
+        group_field = 'group_ids' if 'group_ids' in cls.env['res.users']._fields \
+            else 'groups_id'
         cls.agent = cls.env['res.users'].create({
             'name': 'Agent User', 'login': 'acl_agent_unit',
-            'groups_id': [(6, 0, [cls.agent_group.id])]})
+            group_field: [(6, 0, [cls.agent_group.id])]})
 
     def test_hierarchy(self):
         self.assertIn(self.agent_group, self.user_group.implied_ids)
-        self.assertIn(self.agent_group, self.manager_group.trans_implied_ids)
+        # v19 renamed res.groups.trans_implied_ids -> all_implied_ids.
+        trans_field = 'all_implied_ids' \
+            if 'all_implied_ids' in self.env['res.groups']._fields \
+            else 'trans_implied_ids'
+        self.assertIn(self.agent_group, self.manager_group[trans_field])
 
     def test_agent_is_not_user_or_manager(self):
         self.assertFalse(self.agent.has_group(
