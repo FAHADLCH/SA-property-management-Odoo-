@@ -23,6 +23,8 @@ access_sa_property_installment_user,sa.property.installment user,model_sa_proper
 access_sa_property_installment_manager,sa.property.installment manager,model_sa_property_installment,group_sa_property_manager,1,1,1,1
 access_sa_property_transfer_user,sa.property.transfer user,model_sa_property_transfer,group_sa_property_user,1,1,1,0
 access_sa_property_transfer_manager,sa.property.transfer manager,model_sa_property_transfer,group_sa_property_manager,1,1,1,1
+access_sa_biometric_verification_user,sa.biometric.verification user,model_sa_biometric_verification,group_sa_property_user,1,1,1,0
+access_sa_biometric_verification_manager,sa.biometric.verification manager,model_sa_biometric_verification,group_sa_property_manager,1,1,1,1
 access_sa_transfer_tax_line_user,sa.transfer.tax.line user,model_sa_transfer_tax_line,group_sa_property_user,1,1,1,1
 access_sa_transfer_tax_line_manager,sa.transfer.tax.line manager,model_sa_transfer_tax_line,group_sa_property_manager,1,1,1,1
 access_sa_transfer_misc_line_user,sa.transfer.misc.line user,model_sa_transfer_misc_line,group_sa_property_user,1,1,1,1

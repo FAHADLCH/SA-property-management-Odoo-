@@ -39,6 +39,9 @@ class SaPropertyTransfer(models.Model):
         'res.partner', string='Current Owner', required=True, tracking=True)
     to_partner_id = fields.Many2one(
         'res.partner', string='New Owner', required=True, tracking=True)
+    to_partner_biometric_verified = fields.Boolean(
+        related='to_partner_id.sa_biometric_verified', readonly=True,
+        string='New Owner Identity Verified')
     dealer_id = fields.Many2one('sa.property.dealer', tracking=True)
 
     transfer_date = fields.Date(
@@ -233,11 +236,40 @@ class SaPropertyTransfer(models.Model):
                 raise UserError(_("Only transfers in review can be approved."))
             rec.state = 'approved'
 
+    def _check_biometric_verification(self):
+        self.ensure_one()
+        require = self.env['ir.config_parameter'].sudo().get_param(
+            'sa_property_management.require_biometric_verification')
+        if require and require not in ('False', '0', '') \
+                and not self.to_partner_biometric_verified:
+            raise UserError(_(
+                "New owner '%s' must complete biometric identity verification "
+                "before this transfer can be completed. Use the 'Verify "
+                "Identity' button to capture it."
+            ) % (self.to_partner_id.display_name or ''))
+
+    def action_verify_buyer_identity(self):
+        self.ensure_one()
+        if not self.to_partner_id:
+            raise UserError(_("Select the new owner first."))
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Verify Buyer Identity'),
+            'res_model': 'sa.biometric.verification',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_customer_id': self.to_partner_id.id,
+                'default_transfer_id': self.id,
+            },
+        }
+
     def action_complete(self):
         """Finalize transfer: post the accounting entry, switch ownership."""
         for rec in self:
             if rec.state != 'approved':
                 raise UserError(_("Only approved transfers can be completed."))
+            rec._check_biometric_verification()
             if rec.checklist_ids and not rec.checklist_complete:
                 pending = rec.checklist_ids.filtered(
                     lambda l: l.required and not l.is_done)

@@ -9,11 +9,11 @@
                 <field name="code"/>
                 <field name="name"/>
                 <field name="city"/>
-                <field name="total_area"/>
+                <field name="total_area" sum="Total Area"/>
                 <field name="area_uom"/>
-                <field name="property_count"/>
-                <field name="available_count"/>
-                <field name="sold_count"/>
+                <field name="property_count" sum="Properties"/>
+                <field name="available_count" sum="Available"/>
+                <field name="sold_count" sum="Sold"/>
             </list>
         </field>
     </record>
@@ -66,6 +66,16 @@
                                 class="oe_stat_button" icon="fa-home">
                             <field name="property_count" widget="statinfo"
                                    string="Properties"/>
+                        </button>
+                        <button name="action_view_properties" type="object"
+                                class="oe_stat_button" icon="fa-check-circle">
+                            <field name="available_count" widget="statinfo"
+                                   string="Available"/>
+                        </button>
+                        <button name="action_view_properties" type="object"
+                                class="oe_stat_button" icon="fa-money">
+                            <field name="sold_count" widget="statinfo"
+                                   string="Sold"/>
                         </button>
                     </div>
                     <field name="image" widget="image" class="oe_avatar"/>

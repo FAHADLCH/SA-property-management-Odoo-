@@ -71,9 +71,9 @@ both series.
     'support': "info@sasystems.solutions",
     'license': 'LGPL-3',
     'category': 'Services/Real Estate',
-    # Series-pinned to Odoo 18. The IDENTICAL codebase runs on Odoo 19 from the
-    # 19.0 branch (version 19.0.2.0.0); only this version line differs per series
-    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
+    # Series-agnostic version so the module installs on Odoo 18 and 19 alike
+    # (a "19.0.x" string is rejected by Odoo 18, and vice-versa). Odoo prefixes
+    # the running series automatically, so this reports as 2.0 on both.
     'version': '18.0.2.0.0',
     'application': True,
     'installable': True,
@@ -139,6 +139,7 @@ both series.
         'views/sa_lead_source_views.xml',
         'views/sa_crm_lead_views.xml',
         'views/sa_verify_templates.xml',
+        'views/sa_biometric_verification_views.xml',
         'views/res_config_settings_views.xml',
         'views/sa_property_dashboard_views.xml',
         'views/sa_construction_project_views.xml',
