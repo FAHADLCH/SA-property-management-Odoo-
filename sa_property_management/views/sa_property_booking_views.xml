@@ -95,6 +95,7 @@
                             <field name="customer_id" options="{'no_quick_create': True}"
                                    readonly="state != 'draft'"/>
                             <field name="property_id" options="{'no_create_edit': True}"
+                                   domain="['|', ('state', '=', 'available'), ('id', '=', property_id)]"
                                    readonly="state != 'draft'"/>
                             <field name="project_id" readonly="1"/>
                             <field name="dealer_id" options="{'no_create': True}"/>
