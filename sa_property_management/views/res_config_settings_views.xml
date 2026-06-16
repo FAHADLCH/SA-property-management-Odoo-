@@ -61,6 +61,11 @@
                                  help="Email reminders for upcoming &amp; overdue installments.">
                             <field name="sa_send_payment_reminders"/>
                         </setting>
+                        <setting id="sa_require_biometric_verification"
+                                 string="Require Biometric Verification"
+                                 help="Block booking confirmation and transfer completion until the customer's identity is biometrically verified.">
+                            <field name="sa_require_biometric_verification"/>
+                        </setting>
                     </block>
                     <block title="Document Branding" name="sa_branding">
                         <setting id="sa_doc_tagline" string="Document Tagline"

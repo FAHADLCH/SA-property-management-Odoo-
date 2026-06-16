@@ -45,6 +45,9 @@
                             string="Complete Transfer" class="btn-primary"
                             invisible="state != 'approved'"
                             groups="sa_property_management.group_sa_property_manager"/>
+                    <button name="action_verify_buyer_identity" type="object"
+                            string="Verify Identity"
+                            invisible="state in ('completed', 'cancelled') or not to_partner_id"/>
                     <button name="action_cancel" type="object"
                             string="Cancel"
                             invisible="state in ('cancelled', 'completed')"/>
@@ -80,6 +83,8 @@
                             <field name="project_id" readonly="1"/>
                             <field name="from_partner_id" readonly="state != 'draft'"/>
                             <field name="to_partner_id" readonly="state != 'draft'"/>
+                            <field name="to_partner_biometric_verified"
+                                   invisible="not to_partner_id"/>
                             <field name="dealer_id" options="{'no_create': True}"/>
                         </group>
                         <group>

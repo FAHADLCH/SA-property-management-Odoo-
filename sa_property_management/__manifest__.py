@@ -139,6 +139,7 @@ both series.
         'views/sa_lead_source_views.xml',
         'views/sa_crm_lead_views.xml',
         'views/sa_verify_templates.xml',
+        'views/sa_biometric_verification_views.xml',
         'views/res_config_settings_views.xml',
         'views/sa_property_dashboard_views.xml',
         'views/sa_construction_project_views.xml',

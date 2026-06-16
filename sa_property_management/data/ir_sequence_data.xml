@@ -34,6 +34,14 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <record id="seq_sa_biometric_verification" model="ir.sequence">
+            <field name="name">Biometric Verification</field>
+            <field name="code">sa.biometric.verification</field>
+            <field name="prefix">BIO-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
         <record id="seq_sa_service_assignment" model="ir.sequence">
             <field name="name">Property Service Assignment</field>
             <field name="code">sa.property.service.assignment</field>

@@ -79,6 +79,14 @@ class ResConfigSettings(models.TransientModel):
         help="When enabled, the system schedules email reminders for due/overdue "
              "installments.")
 
+    sa_require_biometric_verification = fields.Boolean(
+        string='Require Biometric Verification',
+        config_parameter='sa_property_management.require_biometric_verification',
+        default=False,
+        help="When enabled, a booking cannot be confirmed and a transfer "
+             "cannot be completed until the customer has a verified biometric "
+             "identity record.")
+
     sa_doc_footer = fields.Char(
         string='Document Footer Note',
         config_parameter='sa_property_management.doc_footer',
