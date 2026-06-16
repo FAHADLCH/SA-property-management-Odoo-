@@ -168,8 +168,9 @@ class SaPropertyBooking(models.Model):
             # Keep the project in sync with the chosen property.
             if self.property_id.project_id:
                 self.project_id = self.property_id.project_id
-            if not self.total_price:
-                self.total_price = self.property_id.base_price
+            # Always reflect the selected property's own price so switching
+            # units updates the figure instead of keeping a stale value.
+            self.total_price = self.property_id.base_price
             if self.property_id.currency_id:
                 self.currency_id = self.property_id.currency_id
 
