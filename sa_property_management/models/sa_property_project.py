@@ -6,8 +6,10 @@ class SaPropertyProject(models.Model):
     """Top-level grouping for properties — a housing society, tower or scheme."""
     _name = 'sa.property.project'
     _description = 'Property Project / Society'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'sa.image.optimize.mixin']
     _order = 'name'
+
+    _sa_image_fields = ('image',)
 
     name = fields.Char(required=True, tracking=True)
     code = fields.Char(required=True, copy=False, tracking=True)
