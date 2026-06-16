@@ -94,10 +94,11 @@
                         <group>
                             <field name="customer_id" options="{'no_quick_create': True}"
                                    readonly="state != 'draft'"/>
-                            <field name="property_id" options="{'no_create_edit': True}"
-                                   domain="['|', ('state', '=', 'available'), ('id', '=', property_id)]"
+                            <field name="project_id" options="{'no_create_edit': True}"
                                    readonly="state != 'draft'"/>
-                            <field name="project_id" readonly="1"/>
+                            <field name="property_id" options="{'no_create_edit': True}"
+                                   domain="['|', '&amp;', ('state', '=', 'available'), ('project_id', '=', project_id), ('id', '=', property_id)]"
+                                   readonly="state != 'draft'"/>
                             <field name="dealer_id" options="{'no_create': True}"/>
                             <field name="salesperson_id"/>
                             <field name="crm_lead_id" readonly="1"

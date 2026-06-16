@@ -38,10 +38,13 @@ class SaPropertyBooking(models.Model):
 
     customer_id = fields.Many2one(
         'res.partner', required=True, tracking=True)
-    property_id = fields.Many2one(
-        'sa.property', required=True, tracking=True, ondelete='restrict')
     project_id = fields.Many2one(
-        related='property_id.project_id', store=True, readonly=True)
+        'sa.property.project', string='Project', tracking=True,
+        help="Select the project first, then pick an available property "
+             "within it.")
+    property_id = fields.Many2one(
+        'sa.property', required=True, tracking=True, ondelete='restrict',
+        domain="[('state', '=', 'available'), ('project_id', '=', project_id)]")
     dealer_id = fields.Many2one(
         'sa.property.dealer', string='Dealer', tracking=True)
     salesperson_id = fields.Many2one(
@@ -112,6 +115,12 @@ class SaPropertyBooking(models.Model):
             if vals.get('name', _('New')) == _('New'):
                 vals['name'] = self.env['ir.sequence'].next_by_code(
                     'sa.property.booking') or _('New')
+            # Keep project in sync with the property for records created
+            # programmatically (wizards, imports) where onchange doesn't run.
+            if vals.get('property_id') and not vals.get('project_id'):
+                prop = self.env['sa.property'].browse(vals['property_id'])
+                if prop.project_id:
+                    vals['project_id'] = prop.project_id.id
         return super().create(vals_list)
 
     def _sa_status_info(self):
@@ -143,9 +152,19 @@ class SaPropertyBooking(models.Model):
             return term.id if term else False
         return False
 
+    @api.onchange('project_id')
+    def _onchange_project_id(self):
+        # When the project changes, drop any property that no longer belongs
+        # to it so the user always picks an available unit under the project.
+        if self.property_id and self.property_id.project_id != self.project_id:
+            self.property_id = False
+
     @api.onchange('property_id')
     def _onchange_property_id(self):
         if self.property_id:
+            # Keep the project in sync with the chosen property.
+            if self.property_id.project_id:
+                self.project_id = self.property_id.project_id
             if not self.total_price:
                 self.total_price = self.property_id.base_price
             if self.property_id.currency_id:
