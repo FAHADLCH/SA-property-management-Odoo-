@@ -6,7 +6,10 @@ class SaPropertyImage(models.Model):
     """An additional photo in a property's or project's gallery."""
     _name = 'sa.property.image'
     _description = 'Property / Project Image'
+    _inherit = ['sa.image.optimize.mixin']
     _order = 'sequence, id'
+
+    _sa_image_fields = ('image',)
 
     name = fields.Char(string='Title')
     sequence = fields.Integer(default=10)

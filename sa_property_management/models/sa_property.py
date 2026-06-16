@@ -21,11 +21,13 @@ class SaProperty(models.Model):
     """An individual property unit — plot, apartment, house or commercial unit."""
     _name = 'sa.property'
     _description = 'Property Unit'
-    _inherit = ['mail.thread', 'mail.activity.mixin', 'sa.qr.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'sa.qr.mixin',
+                'sa.image.optimize.mixin']
     _order = 'project_id, code'
     _rec_name = 'display_name'
 
     _sa_doc_type = _('Property File')
+    _sa_image_fields = ('image',)
 
     name = fields.Char(string='Title', required=True, tracking=True)
     code = fields.Char(string='Reference', required=True, copy=False,

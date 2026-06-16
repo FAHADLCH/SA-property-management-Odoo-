@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import sa_qr_mixin
+from . import sa_image_optimize_mixin
 from . import sa_transfer_tax
 from . import sa_misc_charge
 from . import sa_kibor_rate
