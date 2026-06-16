@@ -35,6 +35,9 @@
                             string="Confirm" class="btn-primary"
                             invisible="state != 'draft'"
                             context="{'default_booking_id': id}"/>
+                    <button name="action_verify_customer_identity" type="object"
+                            string="Verify Identity"
+                            invisible="state != 'draft' or not customer_id"/>
                     <button name="action_mark_completed" type="object"
                             string="Mark Completed"
                             invisible="state != 'in_payment'"/>
@@ -94,6 +97,8 @@
                         <group>
                             <field name="customer_id" options="{'no_quick_create': True}"
                                    readonly="state != 'draft'"/>
+                            <field name="customer_biometric_verified"
+                                   invisible="not customer_id"/>
                             <field name="project_id" options="{'no_create_edit': True}"
                                    readonly="state != 'draft'"/>
                             <field name="property_id" options="{'no_create_edit': True}"

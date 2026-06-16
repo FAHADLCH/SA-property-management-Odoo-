@@ -69,6 +69,12 @@
               action="action_sa_property_document"
               sequence="55"/>
 
+    <menuitem id="menu_sa_biometric_verification"
+              name="Verifications"
+              parent="menu_sa_property_root"
+              action="action_sa_biometric_verification"
+              sequence="57"/>
+
     <menuitem id="menu_sa_dealers"
               name="Dealers"
               parent="menu_sa_property_root"

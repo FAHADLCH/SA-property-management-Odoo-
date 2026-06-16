@@ -6,6 +6,15 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_biometric_verifications"
+                        type="object" class="oe_stat_button"
+                        icon="fa-id-card"
+                        invisible="sa_biometric_verification_count == 0">
+                    <field name="sa_biometric_verification_count"
+                           widget="statinfo" string="Verifications"/>
+                </button>
+            </div>
             <notebook position="inside">
                 <page string="Property / KYC" name="sa_property_kyc">
                     <group>
@@ -22,6 +31,7 @@
                         <group string="Property Roles">
                             <field name="sa_is_property_customer"/>
                             <field name="sa_is_property_dealer"/>
+                            <field name="sa_biometric_verified"/>
                         </group>
                     </group>
                     <group string="Next of Kin">

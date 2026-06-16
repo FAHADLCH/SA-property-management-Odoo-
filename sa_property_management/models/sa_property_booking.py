@@ -38,6 +38,9 @@ class SaPropertyBooking(models.Model):
 
     customer_id = fields.Many2one(
         'res.partner', required=True, tracking=True)
+    customer_biometric_verified = fields.Boolean(
+        related='customer_id.sa_biometric_verified', readonly=True,
+        string='Customer Identity Verified')
     project_id = fields.Many2one(
         'sa.property.project', string='Project', tracking=True,
         help="Select the project first, then pick an available property "
@@ -208,6 +211,34 @@ class SaPropertyBooking(models.Model):
 
     # ----- Workflow -----
 
+    def _check_biometric_verification(self):
+        self.ensure_one()
+        require = self.env['ir.config_parameter'].sudo().get_param(
+            'sa_property_management.require_biometric_verification')
+        if require and require not in ('False', '0', '') \
+                and not self.customer_biometric_verified:
+            raise UserError(_(
+                "Customer '%s' must complete biometric identity verification "
+                "before this booking can be confirmed. Use the 'Verify "
+                "Identity' button to capture it."
+            ) % (self.customer_id.display_name or ''))
+
+    def action_verify_customer_identity(self):
+        self.ensure_one()
+        if not self.customer_id:
+            raise UserError(_("Select a customer first."))
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Verify Customer Identity'),
+            'res_model': 'sa.biometric.verification',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_customer_id': self.customer_id.id,
+                'default_booking_id': self.id,
+            },
+        }
+
     def action_confirm(self):
         """Mark the booking confirmed; generate the installment schedule and
         the down-payment invoice."""
@@ -216,6 +247,7 @@ class SaPropertyBooking(models.Model):
                 raise UserError(_("Only draft bookings can be confirmed."))
             if not rec.payment_plan_id:
                 raise UserError(_("Select a payment plan first."))
+            rec._check_biometric_verification()
             if rec.property_id.state in ('sold', 'transferred', 'blocked'):
                 raise UserError(_(
                     "Property '%s' is not bookable (state: %s)."

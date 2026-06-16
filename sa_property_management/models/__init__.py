@@ -18,6 +18,7 @@ from . import sa_property_service
 from . import sa_property_booking
 from . import sa_property_installment
 from . import sa_property_transfer
+from . import sa_biometric_verification
 from . import sa_dealer_allocation
 from . import sa_lead_source
 from . import crm_lead
