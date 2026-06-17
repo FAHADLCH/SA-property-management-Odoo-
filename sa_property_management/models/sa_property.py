@@ -3,6 +3,27 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
+# Conversion factors of each supported area unit into square feet. Values use
+# the traditional Pakistani land standard (1 Marla = 272.25 sq ft, 1 Kanal =
+# 20 Marla). These let us aggregate mixed-unit properties under one project.
+SA_AREA_SQFT_FACTORS = {
+    'marla': 272.25,
+    'kanal': 5445.0,
+    'sqft': 1.0,
+    'sqyd': 9.0,
+    'sqm': 10.7639,
+    'acre': 43560.0,
+}
+
+
+def sa_convert_area(value, from_uom, to_uom):
+    """Convert an area ``value`` from ``from_uom`` to ``to_uom`` via sq ft."""
+    if not value or from_uom not in SA_AREA_SQFT_FACTORS \
+            or to_uom not in SA_AREA_SQFT_FACTORS:
+        return value or 0.0
+    return value * SA_AREA_SQFT_FACTORS[from_uom] / SA_AREA_SQFT_FACTORS[to_uom]
+
+
 class SaPropertyFeature(models.Model):
     _name = 'sa.property.feature'
     _description = 'Property Feature'
@@ -83,7 +104,8 @@ class SaProperty(models.Model):
          ('kanal', 'Kanal'),
          ('sqft', 'Square Foot'),
          ('sqyd', 'Square Yard'),
-         ('sqm', 'Square Meter')],
+         ('sqm', 'Square Meter'),
+         ('acre', 'Acre')],
         required=True, default='marla', tracking=True)
     covered_area = fields.Float(string='Covered Area (Sq.Ft)')
 
@@ -278,6 +300,34 @@ class SaProperty(models.Model):
         for rec in self:
             rec.price_per_unit_area = (
                 rec.base_price / rec.area if rec.area else 0.0)
+
+    def _sa_area_in(self, target_uom):
+        """Return this property's area converted to ``target_uom``."""
+        self.ensure_one()
+        return sa_convert_area(self.area, self.area_uom, target_uom)
+
+    @api.constrains('area', 'area_uom', 'project_id')
+    def _check_project_area_limit(self):
+        for project in self.mapped('project_id'):
+            if not project or not project.enforce_area_limit \
+                    or not project.total_area:
+                continue
+            consumed = project._sa_consumed_area()
+            # Tiny tolerance to absorb floating-point conversion noise.
+            if consumed > project.total_area + 1e-4:
+                uom_label = dict(
+                    project._fields['area_uom'].selection).get(
+                        project.area_uom, project.area_uom)
+                raise ValidationError(_(
+                    "Cannot add this property to project '%(project)s': the "
+                    "combined area of its properties (%(consumed).2f %(uom)s) "
+                    "would exceed the project's total land area "
+                    "(%(total).2f %(uom)s).\n\nDisable 'Enforce Land-Area "
+                    "Limit' on the project to allow this.",
+                    project=project.name,
+                    consumed=consumed,
+                    total=project.total_area,
+                    uom=uom_label))
 
     @api.depends('booking_ids', 'transfer_ids', 'document_ids')
     def _compute_counts(self):
