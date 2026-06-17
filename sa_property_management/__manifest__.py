@@ -159,6 +159,8 @@ both series.
             'sa_property_management/static/src/scss/sa_property_dashboard.scss',
             'sa_property_management/static/src/js/sa_property_dashboard.js',
             'sa_property_management/static/src/xml/sa_property_dashboard.xml',
+            'sa_property_management/static/src/js/sa_fingerprint_field.js',
+            'sa_property_management/static/src/xml/sa_fingerprint_field.xml',
         ],
     },
 

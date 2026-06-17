@@ -108,3 +108,25 @@ class SaBiometricVerification(models.Model):
             'verified_on': False,
         })
         return True
+
+    @api.model
+    def get_secugen_config(self):
+        """Settings the in-browser SecuGen WebAPI capture widget needs.
+
+        Returned to the OWL fingerprint widget so it can reach the SecuGen
+        WebAPI (SGIBioSrv) service running on the operator's PC. This is an
+        access-controlled accessor so the widget never reads arbitrary system
+        parameters directly.
+        """
+        ICP = self.env['ir.config_parameter'].sudo()
+        return {
+            'url': ICP.get_param(
+                'sa_property_management.secugen_webapi_url',
+                'https://localhost:8443/SGIFPCapture'),
+            'license': ICP.get_param(
+                'sa_property_management.secugen_license', '') or '',
+            'quality': int(ICP.get_param(
+                'sa_property_management.secugen_min_quality', 50) or 50),
+            'timeout': int(ICP.get_param(
+                'sa_property_management.secugen_timeout', 10000) or 10000),
+        }
