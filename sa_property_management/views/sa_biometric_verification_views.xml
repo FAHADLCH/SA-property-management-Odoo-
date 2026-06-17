@@ -70,7 +70,7 @@
                     </group>
                     <group string="Captured Biometrics">
                         <group>
-                            <field name="fingerprint_image" widget="image"
+                            <field name="fingerprint_image" widget="sa_fingerprint"
                                    class="oe_avatar"/>
                             <field name="face_photo" widget="image"
                                    class="oe_avatar"/>

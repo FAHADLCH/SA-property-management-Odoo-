@@ -72,6 +72,32 @@
                             <field name="sa_require_biometric_verification"/>
                         </setting>
                     </block>
+                    <block title="Fingerprint Device (optional)" name="sa_biometric_device">
+                        <setting id="sa_secugen_webapi_url"
+                                 string="SecuGen WebAPI URL"
+                                 help="Local SecuGen SGIBioSrv capture endpoint on the operator's PC. Optional — if unset or offline, operators simply upload an image, so the device never blocks a booking or transfer.">
+                            <field name="sa_secugen_webapi_url"
+                                   placeholder="https://localhost:8443/SGIFPCapture"/>
+                            <div class="content-group mt-2">
+                                <div class="row">
+                                    <label for="sa_secugen_min_quality"
+                                           string="Min Quality" class="col-lg-5 o_light_label"/>
+                                    <field name="sa_secugen_min_quality"/>
+                                </div>
+                                <div class="row">
+                                    <label for="sa_secugen_timeout"
+                                           string="Capture Timeout (ms)" class="col-lg-5 o_light_label"/>
+                                    <field name="sa_secugen_timeout"/>
+                                </div>
+                                <div class="row">
+                                    <label for="sa_secugen_license"
+                                           string="License String" class="col-lg-5 o_light_label"/>
+                                    <field name="sa_secugen_license"
+                                           password="True"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
                     <block title="Document Branding" name="sa_branding">
                         <setting id="sa_doc_tagline" string="Document Tagline"
                                  help="Printed under the company name on PDF documents.">
