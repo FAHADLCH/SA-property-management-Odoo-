@@ -226,6 +226,10 @@ class SaProperty(models.Model):
             'default_code': code,
             'company_id': self.company_id.id,
             'sa_property_id': self.id,
+            # Invoicing is owned by the booking's installment schedule, not the
+            # sale order. A delivery policy keeps the order from prompting its
+            # own (duplicate) invoice during the payment lifecycle.
+            'invoice_policy': 'delivery',
         }
         if categ:
             vals['categ_id'] = categ.id
@@ -241,6 +245,7 @@ class SaProperty(models.Model):
                     'name': vals['name'],
                     'list_price': vals['list_price'],
                     'default_code': vals['default_code'],
+                    'invoice_policy': 'delivery',
                 })
             else:
                 tmpl = Product.create(vals)
