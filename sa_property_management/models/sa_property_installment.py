@@ -260,6 +260,7 @@ class SaPropertyInstallment(models.Model):
                 'currency_id': rec.currency_id.id,
                 'company_id': booking.company_id.id,
                 'invoice_payment_term_id': booking.payment_term_id.id or False,
+                'invoice_origin': booking.sale_order_id.name or booking.name,
                 'sa_booking_id': booking.id,
                 'sa_installment_id': rec.id,
                 'invoice_line_ids': [(0, 0, {
