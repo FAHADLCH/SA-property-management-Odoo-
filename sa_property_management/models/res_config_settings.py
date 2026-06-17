@@ -95,6 +95,31 @@ class ResConfigSettings(models.TransientModel):
              "cannot be completed until the customer has a verified biometric "
              "identity record.")
 
+    sa_secugen_webapi_url = fields.Char(
+        string='SecuGen WebAPI URL',
+        config_parameter='sa_property_management.secugen_webapi_url',
+        default='https://localhost:8443/SGIFPCapture',
+        help="Local SecuGen WebAPI (SGIBioSrv) capture endpoint exposed on the "
+             "operator's PC. The 'Scan with SecuGen' button on a verification "
+             "posts to this URL. The service must trust this Odoo origin "
+             "(CORS) and its certificate must be accepted by the browser.")
+    sa_secugen_license = fields.Char(
+        string='SecuGen License String',
+        config_parameter='sa_property_management.secugen_license',
+        help="Optional SecuGen WebAPI license string (licstr). Leave empty "
+             "when running the service locally without a license restriction.")
+    sa_secugen_min_quality = fields.Integer(
+        string='Min Fingerprint Quality',
+        config_parameter='sa_property_management.secugen_min_quality',
+        default=50,
+        help="Minimum acceptable image quality (0-100) requested from the "
+             "scanner. Captures below it warn the operator to re-scan.")
+    sa_secugen_timeout = fields.Integer(
+        string='Capture Timeout (ms)',
+        config_parameter='sa_property_management.secugen_timeout',
+        default=10000,
+        help="How long the scanner waits for a finger before timing out.")
+
     sa_doc_footer = fields.Char(
         string='Document Footer Note',
         config_parameter='sa_property_management.doc_footer',
