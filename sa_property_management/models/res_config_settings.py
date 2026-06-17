@@ -26,9 +26,17 @@ class ResConfigSettings(models.TransientModel):
          ('kanal', 'Kanal'),
          ('sqft', 'Square Foot'),
          ('sqyd', 'Square Yard'),
-         ('sqm', 'Square Meter')],
+         ('sqm', 'Square Meter'),
+         ('acre', 'Acre')],
         string='Default Area Unit', default='marla',
         config_parameter='sa_property_management.default_area_uom')
+
+    sa_enforce_area_limit = fields.Boolean(
+        string='Enforce Project Land-Area Limit',
+        config_parameter='sa_property_management.enforce_area_limit',
+        help="Default for new projects: block creating properties whose "
+             "combined area exceeds the project's total land area. Each "
+             "project can still override this individually.")
 
     sa_property_journal_id = fields.Many2one(
         'account.journal', string='Property Sales Journal',

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 
+from .sa_property import sa_convert_area
+
 
 class SaPropertyProject(models.Model):
     """Top-level grouping for properties — a housing society, tower or scheme."""
@@ -37,6 +39,18 @@ class SaPropertyProject(models.Model):
          ('sqm', 'Square Meter'),
          ('acre', 'Acre')],
         default='kanal', required=True)
+    consumed_area = fields.Float(
+        string='Allocated Area', compute='_compute_area_usage',
+        help="Combined area of all properties under this project, converted "
+             "into the project's land-area unit.")
+    remaining_area = fields.Float(
+        string='Remaining Area', compute='_compute_area_usage',
+        help="Total land area minus the area already allocated to properties.")
+    enforce_area_limit = fields.Boolean(
+        string='Enforce Land-Area Limit',
+        default=lambda self: self._default_enforce_area_limit(),
+        help="When enabled, properties cannot be created or resized if their "
+             "combined area would exceed this project's total land area.")
 
     description = fields.Html()
     image = fields.Image(max_width=1024, max_height=1024)
@@ -71,6 +85,25 @@ class SaPropertyProject(models.Model):
                 lambda p: p.state == 'available'))
             rec.sold_count = len(rec.property_ids.filtered(
                 lambda p: p.state in ('sold', 'transferred')))
+
+    @api.model
+    def _default_enforce_area_limit(self):
+        return self.env['ir.config_parameter'].sudo().get_param(
+            'sa_property_management.enforce_area_limit') in ('True', '1', 'true')
+
+    def _sa_consumed_area(self):
+        """Sum of every property's area converted into the project's unit."""
+        self.ensure_one()
+        return sum(
+            sa_convert_area(p.area, p.area_uom, self.area_uom)
+            for p in self.property_ids)
+
+    @api.depends('property_ids', 'property_ids.area', 'property_ids.area_uom',
+                 'area_uom', 'total_area')
+    def _compute_area_usage(self):
+        for rec in self:
+            rec.consumed_area = rec._sa_consumed_area()
+            rec.remaining_area = (rec.total_area or 0.0) - rec.consumed_area
 
     def action_view_properties(self):
         self.ensure_one()

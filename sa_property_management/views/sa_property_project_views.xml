@@ -11,6 +11,8 @@
                 <field name="city"/>
                 <field name="total_area" sum="Total Area"/>
                 <field name="area_uom"/>
+                <field name="consumed_area" sum="Allocated" optional="show"/>
+                <field name="remaining_area" sum="Remaining" optional="show"/>
                 <field name="property_count" sum="Properties"/>
                 <field name="available_count" sum="Available"/>
                 <field name="sold_count" sum="Sold"/>
@@ -94,6 +96,9 @@
                         <group>
                             <field name="total_area"/>
                             <field name="area_uom"/>
+                            <field name="consumed_area"/>
+                            <field name="remaining_area"/>
+                            <field name="enforce_area_limit"/>
                             <field name="active" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="currency_id" options="{'no_create': True}"

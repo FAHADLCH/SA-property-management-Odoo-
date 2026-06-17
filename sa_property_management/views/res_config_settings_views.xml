@@ -18,6 +18,11 @@
                                  help="Default unit displayed on new properties.">
                             <field name="sa_default_area_uom"/>
                         </setting>
+                        <setting id="sa_enforce_area_limit"
+                                 string="Enforce Project Land-Area Limit"
+                                 help="Default for new projects: block adding properties beyond the project's total land area.">
+                            <field name="sa_enforce_area_limit"/>
+                        </setting>
                         <setting id="sa_default_dealer_commission"
                                  string="Default Dealer Commission (%)">
                             <field name="sa_default_dealer_commission"/>
